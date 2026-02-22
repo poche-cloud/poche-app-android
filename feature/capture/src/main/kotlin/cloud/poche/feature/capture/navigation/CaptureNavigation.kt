@@ -4,20 +4,31 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import cloud.poche.core.model.MemoType
 import cloud.poche.feature.capture.CaptureScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object CaptureRoute
+data class CaptureRoute(val memoType: String = MemoType.TEXT.name)
 
-fun NavController.navigateToCapture(navOptions: NavOptions? = null) {
-    navigate(CaptureRoute, navOptions)
+fun NavController.navigateToCapture(
+    memoType: MemoType = MemoType.TEXT,
+    navOptions: NavOptions? = null,
+) {
+    navigate(CaptureRoute(memoType = memoType.name), navOptions)
 }
 
 fun NavGraphBuilder.captureScreen(
     onCaptureComplete: () -> Unit,
 ) {
-    composable<CaptureRoute> {
-        CaptureScreen(onCaptureComplete = onCaptureComplete)
+    composable<CaptureRoute> { backStackEntry ->
+        val route = backStackEntry.toRoute<CaptureRoute>()
+        val memoType = runCatching { MemoType.valueOf(route.memoType) }
+            .getOrDefault(MemoType.TEXT)
+        CaptureScreen(
+            memoType = memoType,
+            onCaptureComplete = onCaptureComplete,
+        )
     }
 }

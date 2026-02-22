@@ -9,4 +9,5 @@ android {
 
 dependencies {
     implementation(project(":core:data"))
+    implementation(libs.androidx.compose.material.icons.extended)
 }
