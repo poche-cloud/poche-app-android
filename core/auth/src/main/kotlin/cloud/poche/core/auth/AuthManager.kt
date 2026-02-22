@@ -7,4 +7,5 @@ interface AuthManager {
     val currentUserId: String?
     suspend fun signInAnonymously(): Result<String>
     suspend fun signOut()
+    suspend fun deleteAccount()
 }
