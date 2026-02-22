@@ -8,6 +8,7 @@ import cloud.poche.feature.capture.navigation.captureScreen
 import cloud.poche.feature.capture.navigation.navigateToCapture
 import cloud.poche.feature.home.navigation.HomeRoute
 import cloud.poche.feature.home.navigation.homeScreen
+import cloud.poche.feature.home.navigation.navigateToHome
 import cloud.poche.feature.memo.navigation.memoDetailScreen
 import cloud.poche.feature.memo.navigation.navigateToMemoDetail
 import cloud.poche.feature.onboarding.navigation.onboardingScreen
@@ -33,7 +34,24 @@ fun PocheNavHost(
         memoDetailScreen(
             onBackClick = { navController.popBackStack() },
         )
-        settingsScreen()
+        settingsScreen(
+            navController = navController,
+            onSignedOut = {
+                navController.navigateToHome(
+                    androidx.navigation.navOptions {
+                        popUpTo<HomeRoute> { inclusive = true }
+                    },
+                )
+            },
+            onAccountDeleted = {
+                navController.navigateToHome(
+                    androidx.navigation.navOptions {
+                        popUpTo<HomeRoute> { inclusive = true }
+                    },
+                )
+            },
+            onLicensesClick = { /* TODO: OSSライセンス画面へ遷移 */ },
+        )
         onboardingScreen(
             onComplete = { navController.popBackStack() },
         )

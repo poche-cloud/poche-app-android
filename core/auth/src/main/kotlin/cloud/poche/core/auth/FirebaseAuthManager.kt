@@ -30,4 +30,9 @@ class FirebaseAuthManager @Inject constructor(
     override suspend fun signOut() {
         firebaseAuth.signOut()
     }
+
+    override suspend fun deleteAccount() {
+        val user = firebaseAuth.currentUser ?: error("No user signed in")
+        user.delete().await()
+    }
 }
