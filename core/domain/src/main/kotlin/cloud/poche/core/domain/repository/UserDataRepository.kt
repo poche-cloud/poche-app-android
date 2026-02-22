@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserDataRepository {
     val userData: Flow<UserData>
+    val locale: Flow<String>
     suspend fun setOnboardingCompleted(completed: Boolean)
     suspend fun setDarkThemeConfig(config: DarkThemeConfig)
+    suspend fun setLocale(locale: String)
 }

@@ -13,11 +13,17 @@ class OfflineFirstUserDataRepository @Inject constructor(
 
     override val userData: Flow<UserData> = userPreferencesDataSource.userData
 
+    override val locale: Flow<String> = userPreferencesDataSource.locale
+
     override suspend fun setOnboardingCompleted(completed: Boolean) {
         userPreferencesDataSource.setOnboardingCompleted(completed)
     }
 
     override suspend fun setDarkThemeConfig(config: DarkThemeConfig) {
         userPreferencesDataSource.setDarkThemeConfig(config)
+    }
+
+    override suspend fun setLocale(locale: String) {
+        userPreferencesDataSource.setLocale(locale)
     }
 }

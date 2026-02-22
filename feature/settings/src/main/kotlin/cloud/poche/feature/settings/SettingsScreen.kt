@@ -62,6 +62,7 @@ import cloud.poche.core.designsystem.component.PocheTopAppBar
 internal fun SettingsScreen(
     onNavigateToTheme: () -> Unit,
     onNavigateToNotifications: () -> Unit,
+    onNavigateToLanguage: () -> Unit,
     onNavigateToLicenses: () -> Unit,
     onNavigateToDevTools: () -> Unit,
     onSignedOut: () -> Unit,
@@ -87,6 +88,7 @@ internal fun SettingsScreen(
         snackbarHostState = snackbarHostState,
         onNavigateToTheme = onNavigateToTheme,
         onNavigateToNotifications = onNavigateToNotifications,
+        onNavigateToLanguage = onNavigateToLanguage,
         onNavigateToLicenses = onNavigateToLicenses,
         onNavigateToDevTools = onNavigateToDevTools,
         onSignOutClick = viewModel::signOut,
@@ -102,6 +104,7 @@ internal fun SettingsScreen(
     snackbarHostState: SnackbarHostState,
     onNavigateToTheme: () -> Unit,
     onNavigateToNotifications: () -> Unit,
+    onNavigateToLanguage: () -> Unit,
     onNavigateToLicenses: () -> Unit,
     onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
@@ -137,6 +140,7 @@ internal fun SettingsScreen(
                     uiState = uiState,
                     onNavigateToTheme = onNavigateToTheme,
                     onNavigateToNotifications = onNavigateToNotifications,
+                    onNavigateToLanguage = onNavigateToLanguage,
                     onNavigateToLicenses = onNavigateToLicenses,
                     onNavigateToDevTools = onNavigateToDevTools,
                     onSignOutClick = onSignOutClick,
@@ -153,6 +157,7 @@ private fun SettingsContent(
     uiState: SettingsUiState.Success,
     onNavigateToTheme: () -> Unit,
     onNavigateToNotifications: () -> Unit,
+    onNavigateToLanguage: () -> Unit,
     onNavigateToLicenses: () -> Unit,
     onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
@@ -188,7 +193,7 @@ private fun SettingsContent(
             icon = Icons.Default.Language,
             title = "言語",
             subtitle = "表示言語を変更",
-            onClick = { /* TODO: 言語選択画面 */ },
+            onClick = onNavigateToLanguage,
         )
         SettingsDivider()
         SettingsListTile(
