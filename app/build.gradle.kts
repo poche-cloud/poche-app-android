@@ -76,7 +76,7 @@ dependencies {
     implementation(project(":feature:memo"))
     implementation(project(":feature:settings"))
     implementation(project(":feature:onboarding"))
-    debugImplementation(project(":feature:devtools"))
+    implementation(project(":feature:devtools"))
 
     // AndroidX
     implementation(libs.androidx.core.ktx)
