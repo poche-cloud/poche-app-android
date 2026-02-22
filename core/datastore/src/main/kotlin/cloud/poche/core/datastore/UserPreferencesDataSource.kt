@@ -36,9 +36,20 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    val locale: Flow<String> = dataStore.data.map { prefs ->
+        prefs[LOCALE] ?: ""
+    }
+
+    suspend fun setLocale(locale: String) {
+        dataStore.edit { prefs ->
+            prefs[LOCALE] = locale
+        }
+    }
+
     private companion object {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val DARK_THEME_CONFIG = stringPreferencesKey("dark_theme_config")
+        val LOCALE = stringPreferencesKey("locale")
     }
 }
 
