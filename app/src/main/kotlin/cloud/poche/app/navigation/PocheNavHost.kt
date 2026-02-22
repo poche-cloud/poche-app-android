@@ -25,6 +25,7 @@ fun PocheNavHost(
     ) {
         homeScreen(
             onMemoClick = navController::navigateToMemoDetail,
+            onNavigateToCapture = navController::navigateToCapture,
         )
         captureScreen(
             onCaptureComplete = { navController.popBackStack() },

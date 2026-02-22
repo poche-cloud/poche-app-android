@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">Poche App</string>
+
+    <!-- Home -->
+    <string name="home_title">ホーム</string>
+    <string name="home_empty_title">メモがありません</string>
+    <string name="home_empty_description">下のバーからメモを追加しましょう</string>
+    <string name="home_quick_capture_hint">メモを入力…</string>
+    <string name="home_quick_capture_submit">ポケットに入れる</string>
+    <string name="home_quick_capture_add">追加</string>
+
+    <!-- Capture Action Sheet -->
+    <string name="capture_memo">複数行メモ</string>
+    <string name="capture_memo_desc">長文のメモを書く</string>
+    <string name="capture_photo">写真</string>
+    <string name="capture_photo_desc">写真を撮影して保存</string>
+    <string name="capture_voice">音声メモ</string>
+    <string name="capture_voice_desc">音声を録音</string>
+
+    <!-- Common -->
+    <string name="delete_memo">メモを削除</string>
+    <string name="error_delete_failed">削除に失敗しました</string>
+    <string name="error_save_failed">保存に失敗しました</string>
+    <string name="error_unknown">不明なエラー</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">ホーム</string>
+    <string name="nav_settings">設定</string>
+    <string name="nav_add_memo">メモ追加</string>
 </resources>

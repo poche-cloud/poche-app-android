@@ -7,10 +7,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -24,7 +22,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import cloud.poche.app.navigation.PocheNavHost
 import cloud.poche.core.designsystem.theme.PocheTheme
-import cloud.poche.feature.capture.navigation.navigateToCapture
 import cloud.poche.feature.home.navigation.HomeRoute
 import cloud.poche.feature.home.navigation.navigateToHome
 import cloud.poche.feature.settings.navigation.SettingsRoute
@@ -82,11 +79,6 @@ fun PocheApp() {
                     icon = { Icon(Icons.Default.Settings, contentDescription = "設定") },
                     label = { Text("設定") },
                 )
-            }
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigateToCapture() }) {
-                Icon(Icons.Default.Add, contentDescription = "メモ追加")
             }
         },
     ) { innerPadding ->
