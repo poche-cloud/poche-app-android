@@ -1,0 +1,18 @@
+package cloud.poche.core.data.repository
+
+import cloud.poche.core.datastore.UserPreferencesDataSource
+import cloud.poche.core.domain.repository.UserDataRepository
+import cloud.poche.core.model.UserData
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class OfflineFirstUserDataRepository @Inject constructor(
+    private val userPreferencesDataSource: UserPreferencesDataSource,
+) : UserDataRepository {
+
+    override val userData: Flow<UserData> = userPreferencesDataSource.userData
+
+    override suspend fun setOnboardingCompleted(completed: Boolean) {
+        userPreferencesDataSource.setOnboardingCompleted(completed)
+    }
+}
