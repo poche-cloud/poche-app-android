@@ -13,23 +13,30 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cloud.poche.core.model.MemoType
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +45,24 @@ internal fun CaptureScreen(
     memoType: MemoType,
     onCaptureComplete: () -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: CaptureViewModel = hiltViewModel(),
 ) {
+    val isSaving by viewModel.isSaving.collectAsStateWithLifecycle()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.events.collect { event ->
+            when (event) {
+                is CaptureEvent.SaveSuccess -> {
+                    snackbarHostState.showSnackbar("保存しました")
+                    onCaptureComplete()
+                }
+                is CaptureEvent.ShowError ->
+                    snackbarHostState.showSnackbar(event.message)
+            }
+        }
+    }
+
     val title = when (memoType) {
         MemoType.TEXT -> "メモ"
         MemoType.PHOTO -> "写真"
@@ -60,10 +84,12 @@ internal fun CaptureScreen(
                 },
             )
         },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
         when (memoType) {
             MemoType.TEXT -> MemoCaptureContent(
-                onCaptureComplete = onCaptureComplete,
+                isSaving = isSaving,
+                onSave = viewModel::saveMemo,
                 modifier = Modifier.padding(innerPadding),
             )
             MemoType.PHOTO -> PlaceholderCaptureContent(
@@ -82,7 +108,8 @@ internal fun CaptureScreen(
 
 @Composable
 private fun MemoCaptureContent(
-    onCaptureComplete: () -> Unit,
+    isSaving: Boolean,
+    onSave: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var content by rememberSaveable { mutableStateOf("") }
@@ -99,14 +126,22 @@ private fun MemoCaptureContent(
                 .fillMaxWidth()
                 .weight(1f),
             placeholder = { Text("メモを入力...") },
+            enabled = !isSaving,
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = onCaptureComplete,
+            onClick = { onSave(content) },
             modifier = Modifier.fillMaxWidth(),
-            enabled = content.isNotBlank(),
+            enabled = content.isNotBlank() && !isSaving,
         ) {
-            Text("保存")
+            if (isSaving) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(20.dp),
+                    strokeWidth = 2.dp,
+                )
+            } else {
+                Text("保存")
+            }
         }
     }
 }
