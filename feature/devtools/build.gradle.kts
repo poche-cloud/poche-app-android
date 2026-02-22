@@ -5,3 +5,7 @@ plugins {
 android {
     namespace = "cloud.poche.feature.devtools"
 }
+
+dependencies {
+    implementation(libs.androidx.compose.material.icons.extended)
+}
