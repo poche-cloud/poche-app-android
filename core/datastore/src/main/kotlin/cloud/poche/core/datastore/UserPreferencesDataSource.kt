@@ -4,6 +4,8 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import cloud.poche.core.model.DarkThemeConfig
 import cloud.poche.core.model.UserData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -16,6 +18,9 @@ class UserPreferencesDataSource @Inject constructor(
         UserData(
             isOnboardingCompleted = prefs[ONBOARDING_COMPLETED] ?: false,
             userId = null,
+            darkThemeConfig = prefs[DARK_THEME_CONFIG]
+                ?.toDarkThemeConfig()
+                ?: DarkThemeConfig.FOLLOW_SYSTEM,
         )
     }
 
@@ -25,7 +30,18 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setDarkThemeConfig(config: DarkThemeConfig) {
+        dataStore.edit { prefs ->
+            prefs[DARK_THEME_CONFIG] = config.name
+        }
+    }
+
     private companion object {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
+        val DARK_THEME_CONFIG = stringPreferencesKey("dark_theme_config")
     }
 }
+
+private fun String.toDarkThemeConfig(): DarkThemeConfig =
+    runCatching { DarkThemeConfig.valueOf(this) }
+        .getOrDefault(DarkThemeConfig.FOLLOW_SYSTEM)
