@@ -19,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Info
@@ -62,6 +63,7 @@ internal fun SettingsScreen(
     onNavigateToTheme: () -> Unit,
     onNavigateToNotifications: () -> Unit,
     onNavigateToLicenses: () -> Unit,
+    onNavigateToDevTools: () -> Unit,
     onSignedOut: () -> Unit,
     onAccountDeleted: () -> Unit,
     modifier: Modifier = Modifier,
@@ -86,6 +88,7 @@ internal fun SettingsScreen(
         onNavigateToTheme = onNavigateToTheme,
         onNavigateToNotifications = onNavigateToNotifications,
         onNavigateToLicenses = onNavigateToLicenses,
+        onNavigateToDevTools = onNavigateToDevTools,
         onSignOutClick = viewModel::signOut,
         onDeleteAccountClick = viewModel::deleteAccount,
         modifier = modifier,
@@ -100,6 +103,7 @@ internal fun SettingsScreen(
     onNavigateToTheme: () -> Unit,
     onNavigateToNotifications: () -> Unit,
     onNavigateToLicenses: () -> Unit,
+    onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -134,6 +138,7 @@ internal fun SettingsScreen(
                     onNavigateToTheme = onNavigateToTheme,
                     onNavigateToNotifications = onNavigateToNotifications,
                     onNavigateToLicenses = onNavigateToLicenses,
+                    onNavigateToDevTools = onNavigateToDevTools,
                     onSignOutClick = onSignOutClick,
                     onDeleteAccountClick = onDeleteAccountClick,
                     modifier = Modifier.padding(innerPadding),
@@ -149,6 +154,7 @@ private fun SettingsContent(
     onNavigateToTheme: () -> Unit,
     onNavigateToNotifications: () -> Unit,
     onNavigateToLicenses: () -> Unit,
+    onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -235,6 +241,17 @@ private fun SettingsContent(
             title = "バージョン",
             subtitle = uiState.appVersion,
         )
+
+        // 開発者ツールセクション (debug ビルドのみ)
+        if (uiState.isDebugBuild) {
+            SettingsSectionHeader(title = "開発者")
+            SettingsListTile(
+                icon = Icons.Default.DeveloperMode,
+                title = "開発者ツール",
+                subtitle = "環境情報、機能フラグ、キャッシュ操作",
+                onClick = onNavigateToDevTools,
+            )
+        }
 
         // アカウントセクション
         if (uiState.isSignedIn) {

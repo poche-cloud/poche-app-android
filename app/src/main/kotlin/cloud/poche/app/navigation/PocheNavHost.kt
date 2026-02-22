@@ -6,6 +6,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import cloud.poche.feature.capture.navigation.captureScreen
 import cloud.poche.feature.capture.navigation.navigateToCapture
+import cloud.poche.feature.devtools.navigation.devToolsScreen
+import cloud.poche.feature.devtools.navigation.navigateToDevTools
 import cloud.poche.feature.home.navigation.HomeRoute
 import cloud.poche.feature.home.navigation.homeScreen
 import cloud.poche.feature.home.navigation.navigateToHome
@@ -53,9 +55,13 @@ fun PocheNavHost(
                 )
             },
             onLicensesClick = { /* TODO: OSSライセンス画面へ遷移 */ },
+            onDevToolsClick = { navController.navigateToDevTools() },
         )
         onboardingScreen(
             onComplete = { navController.popBackStack() },
+        )
+        devToolsScreen(
+            onBackClick = { navController.popBackStack() },
         )
     }
 }

@@ -40,6 +40,9 @@ class SettingsViewModel @Inject constructor(
         "unknown"
     }
 
+    private val isDebugBuild: Boolean =
+        context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0
+
     val uiState: StateFlow<SettingsUiState> =
         combine(
             getUserDataUseCase(),
@@ -50,6 +53,7 @@ class SettingsViewModel @Inject constructor(
                 isSignedIn = isSignedIn,
                 darkThemeConfig = userData.darkThemeConfig,
                 appVersion = appVersion,
+                isDebugBuild = isDebugBuild,
             )
         }.stateIn(
             scope = viewModelScope,

@@ -27,12 +27,14 @@ fun NavGraphBuilder.settingsScreen(
     onSignedOut: () -> Unit,
     onAccountDeleted: () -> Unit,
     onLicensesClick: () -> Unit,
+    onDevToolsClick: () -> Unit = {},
 ) {
     composable<SettingsRoute> {
         SettingsScreen(
             onNavigateToTheme = { navController.navigate(ThemeSettingsRoute) },
             onNavigateToNotifications = { navController.navigate(NotificationSettingsRoute) },
             onNavigateToLicenses = onLicensesClick,
+            onNavigateToDevTools = onDevToolsClick,
             onSignedOut = onSignedOut,
             onAccountDeleted = onAccountDeleted,
         )

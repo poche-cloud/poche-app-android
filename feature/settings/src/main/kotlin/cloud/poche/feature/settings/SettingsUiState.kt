@@ -10,5 +10,6 @@ sealed interface SettingsUiState {
         val isSignedIn: Boolean,
         val darkThemeConfig: DarkThemeConfig,
         val appVersion: String,
+        val isDebugBuild: Boolean = false,
     ) : SettingsUiState
 }
