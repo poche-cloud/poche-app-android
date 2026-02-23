@@ -40,6 +40,8 @@ private fun MemoEntity.toDomain() = Memo(
     type = MemoType.valueOf(type),
     createdAt = createdAt,
     updatedAt = updatedAt,
+    filePath = filePath,
+    durationMs = durationMs,
 )
 
 private fun Memo.toEntity() = MemoEntity(
@@ -48,4 +50,6 @@ private fun Memo.toEntity() = MemoEntity(
     type = type.name,
     createdAt = createdAt,
     updatedAt = updatedAt,
+    filePath = filePath,
+    durationMs = durationMs,
 )

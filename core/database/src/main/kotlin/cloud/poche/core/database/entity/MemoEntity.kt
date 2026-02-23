@@ -11,4 +11,6 @@ data class MemoEntity(
     val type: String,
     val createdAt: Long,
     val updatedAt: Long,
+    val filePath: String? = null,
+    val durationMs: Long? = null,
 )
