@@ -1,12 +1,5 @@
-*.iml
 .gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
 .DS_Store
 /build
 */build
@@ -14,6 +7,13 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# IntelliJ related
+*.iml
+.idea/*
+!/.idea/icon.svg
+!/.idea/runConfigurations/
+/.idea/runConfigurations/*
 
 # Firebase
 **/google-services.json
