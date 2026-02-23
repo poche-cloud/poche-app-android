@@ -48,19 +48,19 @@ poche-app-android/
 │   ├── designsystem/             # Theme, colors, typography, components
 │   ├── domain/                   # Use cases, repository interfaces
 │   ├── model/                    # Domain models (data classes)
-│   ├── network/                  # Ktor client, API definitions
+│   ├── network/                  # Ktor client, API definitions (scaffold, not yet consumed)
 │   ├── testing/                  # Test utilities, fakes, rules
 │   ├── analytics/                # Analytics abstraction + Firebase impl
 │   ├── auth/                     # Auth abstraction + Firebase impl
-│   ├── notifications/            # Notifications abstraction + Firebase impl
+│   ├── notifications/            # Firebase Cloud Messaging (FCM) reception
 │   └── ui/                       # Shared composables, preview utilities
 ├── feature/
 │   ├── capture/                  # Quick capture (memo/photo/voice)
 │   ├── home/                     # Home screen
 │   ├── memo/                     # Memo detail
 │   ├── settings/                 # Settings
-│   ├── onboarding/               # Onboarding flow
-│   └── devtools/                 # Debug tools (debug build only)
+│   ├── onboarding/               # Onboarding (stub)
+│   └── devtools/                 # Debug tools
 ├── gradle/
 │   └── libs.versions.toml        # Version Catalog
 ├── settings.gradle.kts
@@ -152,7 +152,7 @@ sealed interface HomeUiState {
 
 ### Data Layer (core/data)
 
-- Repository implementations combine multiple data sources
+- Repository implementations use local data sources (Database, DataStore); network sync not yet implemented
 - `Result<T>` type for error handling (from core/common)
 
 ## Commit Convention
@@ -168,8 +168,8 @@ Example: `feat(capture): メモのクイック入力機能を追加`
 
 ## Key Design Decisions
 
-- **Firebase 統合:** Flutter 版の core/*_firebase パターンを踏襲。抽象化と実装を分離
-- **Home Screen Widget:** Android AppWidgetProvider でネイティブ実装。URI スキーム `poche://capture?type=memo|photo|voice`
+- **Firebase 統合:** Flutter 版の core/*_firebase パターンを踏襲。`core/analytics`, `core/auth` は抽象化と実装を分離。`core/notifications` は FCM 受信のみ実装
+- **Home Screen Widget:** Android AppWidgetProvider でネイティブ実装予定。URI スキーム `poche://capture?type=memo|photo|voice` (未実装)
 - **i18n:** Android string resources (`res/values/strings.xml`) を使用
 - **Code Generation:** Hilt (DI), Room (DB), KSP ベース。手動コード生成コマンドは不要 (Gradle が自動実行)
 - **Dependency Injection:** Hilt の `@Module` + `@Provides` / `@Binds` で DI グラフ構築。環境別設定は `@Qualifier` で切り替え
