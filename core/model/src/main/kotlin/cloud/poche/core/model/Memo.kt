@@ -10,6 +10,8 @@ data class Memo(
     val type: MemoType,
     val createdAt: Long,
     val updatedAt: Long,
+    val filePath: String? = null,
+    val durationMs: Long? = null,
 )
 
 enum class MemoType {
