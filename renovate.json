@@ -1,0 +1,83 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices"
+  ],
+  "timezone": "Asia/Tokyo",
+  "schedule": ["before 9am on monday"],
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "description": "Kotlin + Compose Compiler",
+      "groupName": "Kotlin",
+      "matchPackagePrefixes": ["org.jetbrains.kotlin"]
+    },
+    {
+      "description": "KSP",
+      "groupName": "KSP",
+      "matchPackagePrefixes": ["com.google.devtools.ksp"]
+    },
+    {
+      "description": "AndroidX Compose (BOM-managed)",
+      "groupName": "AndroidX Compose",
+      "matchPackagePatterns": ["^androidx\\.compose"]
+    },
+    {
+      "description": "AndroidX non-Compose",
+      "groupName": "AndroidX",
+      "matchPackagePrefixes": ["androidx."],
+      "excludePackagePatterns": ["^androidx\\.compose", "^androidx\\.room"]
+    },
+    {
+      "description": "Room",
+      "groupName": "Room",
+      "matchPackagePrefixes": ["androidx.room"]
+    },
+    {
+      "description": "Hilt / Dagger",
+      "groupName": "Hilt",
+      "matchPackagePrefixes": ["com.google.dagger"]
+    },
+    {
+      "description": "Firebase (BOM-managed)",
+      "groupName": "Firebase",
+      "matchPackagePrefixes": ["com.google.firebase", "com.google.gms"]
+    },
+    {
+      "description": "Ktor",
+      "groupName": "Ktor",
+      "matchPackagePrefixes": ["io.ktor"]
+    },
+    {
+      "description": "Kotlinx (coroutines, serialization)",
+      "groupName": "Kotlinx",
+      "matchPackagePrefixes": ["org.jetbrains.kotlinx"]
+    },
+    {
+      "description": "Coil",
+      "groupName": "Coil",
+      "matchPackagePrefixes": ["io.coil-kt"]
+    },
+    {
+      "description": "Testing",
+      "groupName": "Testing",
+      "matchPackagePrefixes": [
+        "org.junit",
+        "io.mockk",
+        "app.cash.turbine",
+        "androidx.test"
+      ]
+    },
+    {
+      "description": "AGP major updates require manual review",
+      "matchPackagePrefixes": ["com.android.tools.build"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Gradle Wrapper",
+      "matchManagers": ["gradle-wrapper"],
+      "groupName": "Gradle Wrapper"
+    }
+  ]
+}
