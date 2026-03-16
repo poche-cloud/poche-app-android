@@ -47,6 +47,10 @@ gradlePlugin {
             id = "poche.android.testing"
             implementationClass = "AndroidTestingConventionPlugin"
         }
+        register("androidGmd") {
+            id = "poche.android.gmd"
+            implementationClass = "AndroidGmdConventionPlugin"
+        }
         register("detekt") {
             id = "poche.android.detekt"
             implementationClass = "DetektConventionPlugin"

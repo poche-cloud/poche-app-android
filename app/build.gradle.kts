@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.poche.android.application)
     alias(libs.plugins.poche.android.compose)
     alias(libs.plugins.poche.android.hilt)
+    alias(libs.plugins.poche.android.gmd)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.crashlytics)
 }
