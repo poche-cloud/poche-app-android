@@ -9,4 +9,6 @@ interface MemoRepository {
     suspend fun createMemo(memo: Memo)
     suspend fun updateMemo(memo: Memo)
     suspend fun deleteMemo(id: String)
+    suspend fun getMemoCount(): Int
+    suspend fun deleteAll()
 }
