@@ -1,0 +1,66 @@
+name: CodeQL
+
+on:
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 18 * * 0' # Sunday 3:00 JST (18:00 UTC Saturday)
+
+concurrency:
+  group: codeql-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+
+    permissions:
+      security-events: write
+
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - uses: actions/setup-java@c1e323688fd81a25caa38c78aa6df2d33d3e20d9 # v4.8.0
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Copy CI gradle.properties
+        run: |
+          mkdir -p ~/.gradle
+          cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - name: Create dummy google-services.json for CI
+        run: |
+          for flavor_dir in dev stg prod; do
+            mkdir -p "app/src/$flavor_dir"
+            python3 -c "
+          import json
+          pkgs = ['cloud.poche.app', 'cloud.poche.app.debug',
+                  'cloud.poche.app.dev', 'cloud.poche.app.dev.debug',
+                  'cloud.poche.app.stg', 'cloud.poche.app.stg.debug']
+          clients = [{'client_info': {'mobilesdk_app_id': '1:000000000000:android:0000000000000000',
+                      'android_client_info': {'package_name': p}},
+                      'api_key': [{'current_key': 'dummy'}]} for p in pkgs]
+          doc = {'project_info': {'project_number': '000000000000', 'project_id': 'dummy-ci',
+                 'storage_bucket': 'dummy-ci.appspot.com'}, 'client': clients, 'configuration_version': '1'}
+          json.dump(doc, open('app/src/$flavor_dir/google-services.json', 'w'))
+          "
+          done
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@9792ccaef0455e446c567163589397e8c3ac2e0d # v3
+        with:
+          languages: java-kotlin
+
+      - name: Build for CodeQL analysis
+        run: ./gradlew assembleDevDebug
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@9792ccaef0455e446c567163589397e8c3ac2e0d # v3
+        with:
+          category: /language:java-kotlin
