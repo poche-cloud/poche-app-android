@@ -26,4 +26,11 @@ class OfflineFirstUserDataRepository @Inject constructor(
     override suspend fun setLocale(locale: String) {
         userPreferencesDataSource.setLocale(locale)
     }
+
+    override val defaultCaptureType: Flow<String?> =
+        userPreferencesDataSource.defaultCaptureType
+
+    override suspend fun setDefaultCaptureType(type: String?) {
+        userPreferencesDataSource.setDefaultCaptureType(type)
+    }
 }

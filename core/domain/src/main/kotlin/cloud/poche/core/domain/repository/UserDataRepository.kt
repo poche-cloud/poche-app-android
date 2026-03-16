@@ -10,4 +10,6 @@ interface UserDataRepository {
     suspend fun setOnboardingCompleted(completed: Boolean)
     suspend fun setDarkThemeConfig(config: DarkThemeConfig)
     suspend fun setLocale(locale: String)
+    val defaultCaptureType: Flow<String?>
+    suspend fun setDefaultCaptureType(type: String?)
 }
