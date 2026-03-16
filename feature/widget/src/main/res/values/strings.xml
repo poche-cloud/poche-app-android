@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="widget_label">Poche クイックキャプチャ</string>
+    <string name="widget_description">メモ、写真、音声をすぐにキャプチャ</string>
+    <string name="widget_memo_count">%d 件のメモ</string>
+    <string name="widget_memo">メモ</string>
+    <string name="widget_photo">写真</string>
+    <string name="widget_voice">音声</string>
+</resources>
