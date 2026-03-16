@@ -1,8 +1,8 @@
 package cloud.poche.core.domain.usecase
 
+import cloud.poche.core.domain.repository.UserDataRepository
 import cloud.poche.core.model.DarkThemeConfig
 import cloud.poche.core.model.UserData
-import cloud.poche.core.domain.repository.UserDataRepository
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk

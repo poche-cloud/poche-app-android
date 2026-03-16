@@ -18,11 +18,7 @@ import cloud.poche.feature.onboarding.navigation.onboardingScreen
 import cloud.poche.feature.settings.navigation.settingsScreen
 
 @Composable
-fun PocheNavHost(
-    navController: NavHostController,
-    isOnboardingCompleted: Boolean,
-    modifier: Modifier = Modifier,
-) {
+fun PocheNavHost(navController: NavHostController, isOnboardingCompleted: Boolean, modifier: Modifier = Modifier) {
     val startDestination: Any = if (isOnboardingCompleted) HomeRoute else OnboardingRoute
 
     NavHost(

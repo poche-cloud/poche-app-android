@@ -16,12 +16,11 @@ import javax.inject.Singleton
 object DatabaseModule {
     @Provides
     @Singleton
-    fun provideDatabase(@ApplicationContext context: Context): PocheDatabase =
-        Room.databaseBuilder(
-            context,
-            PocheDatabase::class.java,
-            "poche-database",
-        ).build()
+    fun provideDatabase(@ApplicationContext context: Context): PocheDatabase = Room.databaseBuilder(
+        context,
+        PocheDatabase::class.java,
+        "poche-database",
+    ).build()
 
     @Provides
     fun provideMemoDao(database: PocheDatabase): MemoDao = database.memoDao()

@@ -9,11 +9,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material.icons.outlined.Build
 import androidx.compose.material.icons.outlined.Fingerprint
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.outlined.Inventory2
-import androidx.compose.material.icons.automirrored.outlined.Label
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -68,10 +68,7 @@ internal fun EnvironmentInfoSection(
 }
 
 @Composable
-internal fun SectionHeader(
-    title: String,
-    modifier: Modifier = Modifier,
-) {
+internal fun SectionHeader(title: String, modifier: Modifier = Modifier) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleSmall,
@@ -81,12 +78,7 @@ internal fun SectionHeader(
 }
 
 @Composable
-private fun InfoTile(
-    icon: ImageVector,
-    title: String,
-    value: String,
-    modifier: Modifier = Modifier,
-) {
+private fun InfoTile(icon: ImageVector, title: String, value: String, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()

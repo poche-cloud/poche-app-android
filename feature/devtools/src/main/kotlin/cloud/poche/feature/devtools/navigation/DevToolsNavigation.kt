@@ -14,9 +14,7 @@ fun NavController.navigateToDevTools(navOptions: NavOptions? = null) {
     navigate(DevToolsRoute, navOptions)
 }
 
-fun NavGraphBuilder.devToolsScreen(
-    onBackClick: () -> Unit,
-) {
+fun NavGraphBuilder.devToolsScreen(onBackClick: () -> Unit) {
     composable<DevToolsRoute> {
         DevToolsScreen(onBackClick = onBackClick)
     }

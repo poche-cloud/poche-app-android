@@ -71,6 +71,7 @@ private fun LanguageSettingsScreenContent(
     ) { innerPadding ->
         when (uiState) {
             is LanguageSettingsUiState.Loading -> Unit
+
             is LanguageSettingsUiState.Success -> {
                 Column(
                     modifier = Modifier

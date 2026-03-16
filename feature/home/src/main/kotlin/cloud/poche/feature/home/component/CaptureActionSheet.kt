@@ -23,11 +23,7 @@ import cloud.poche.core.model.MemoType
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun CaptureActionSheet(
-    onDismiss: () -> Unit,
-    onSelected: (MemoType) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun CaptureActionSheet(onDismiss: () -> Unit, onSelected: (MemoType) -> Unit, modifier: Modifier = Modifier) {
     val sheetState = rememberModalBottomSheetState()
 
     ModalBottomSheet(

@@ -1,9 +1,9 @@
 package cloud.poche.core.domain.usecase
 
 import app.cash.turbine.test
+import cloud.poche.core.domain.repository.UserDataRepository
 import cloud.poche.core.model.DarkThemeConfig
 import cloud.poche.core.model.UserData
-import cloud.poche.core.domain.repository.UserDataRepository
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf

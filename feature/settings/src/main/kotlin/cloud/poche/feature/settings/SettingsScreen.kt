@@ -19,8 +19,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.DeleteForever
-import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material.icons.filled.Description
+import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
@@ -321,11 +321,7 @@ private fun SettingsContent(
 // region Components
 
 @Composable
-private fun SettingsSectionHeader(
-    title: String,
-    modifier: Modifier = Modifier,
-    isFirst: Boolean = false,
-) {
+private fun SettingsSectionHeader(title: String, modifier: Modifier = Modifier, isFirst: Boolean = false) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleSmall,
@@ -398,12 +394,7 @@ private fun SettingsListTile(
 }
 
 @Composable
-private fun SettingsInfoTile(
-    icon: ImageVector,
-    title: String,
-    subtitle: String,
-    modifier: Modifier = Modifier,
-) {
+private fun SettingsInfoTile(icon: ImageVector, title: String, subtitle: String, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()

@@ -42,7 +42,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 internal fun MemoDetailScreen(
-    memoId: String,
+    @Suppress("UnusedParameter") memoId: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MemoDetailViewModel = hiltViewModel(),
@@ -55,6 +55,7 @@ internal fun MemoDetailScreen(
             when (event) {
                 is MemoDetailEvent.Saved ->
                     snackbarHostState.showSnackbar("保存しました")
+
                 is MemoDetailEvent.ShowError ->
                     snackbarHostState.showSnackbar(event.message)
             }

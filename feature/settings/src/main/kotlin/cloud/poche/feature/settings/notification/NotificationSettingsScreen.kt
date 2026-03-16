@@ -29,10 +29,7 @@ import androidx.core.content.ContextCompat
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun NotificationSettingsScreen(
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun NotificationSettingsScreen(onBackClick: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var isNotificationEnabled by remember {
         mutableStateOf(

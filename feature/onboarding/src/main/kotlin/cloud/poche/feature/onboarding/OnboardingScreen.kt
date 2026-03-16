@@ -150,10 +150,7 @@ private fun OnboardingScreenContent(
 }
 
 @Composable
-private fun OnboardingPage(
-    data: OnboardingPageData,
-    modifier: Modifier = Modifier,
-) {
+private fun OnboardingPage(data: OnboardingPageData, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -182,11 +179,7 @@ private fun OnboardingPage(
 }
 
 @Composable
-private fun PageIndicator(
-    pageCount: Int,
-    currentPage: Int,
-    modifier: Modifier = Modifier,
-) {
+private fun PageIndicator(pageCount: Int, currentPage: Int, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -208,8 +201,4 @@ private fun PageIndicator(
     }
 }
 
-private data class OnboardingPageData(
-    val icon: ImageVector,
-    val title: String,
-    val description: String,
-)
+private data class OnboardingPageData(val icon: ImageVector, val title: String, val description: String)

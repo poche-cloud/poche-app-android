@@ -17,9 +17,7 @@ import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DevToolsViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
-) : ViewModel() {
+internal class DevToolsViewModel @Inject constructor(@ApplicationContext private val context: Context) : ViewModel() {
 
     private val _events = MutableSharedFlow<DevToolsEvent>()
     val events = _events.asSharedFlow()

@@ -21,8 +21,9 @@ class PocheFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         val notification = remoteMessage.notification ?: return
-        val title = notification.title ?: return
-        val body = notification.body ?: return
+        val title = notification.title
+        val body = notification.body
+        if (title == null || body == null) return
 
         val pendingIntent = PendingIntent.getActivity(
             this,

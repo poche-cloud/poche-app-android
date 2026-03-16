@@ -65,9 +65,11 @@ internal fun DataManagementScreen(
                     }
                     context.startActivity(Intent.createChooser(shareIntent, null))
                 }
+
                 is DataManagementEvent.DeleteSuccess -> {
                     snackbarHostState.showSnackbar("すべてのメモを削除しました")
                 }
+
                 is DataManagementEvent.ShowError -> {
                     snackbarHostState.showSnackbar(event.message)
                 }
@@ -117,6 +119,7 @@ private fun DataManagementScreenContent(
     ) { innerPadding ->
         when (uiState) {
             is DataManagementUiState.Loading -> Unit
+
             is DataManagementUiState.Success -> {
                 Column(
                     modifier = Modifier

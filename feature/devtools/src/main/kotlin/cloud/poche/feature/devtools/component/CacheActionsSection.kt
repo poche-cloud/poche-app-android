@@ -20,10 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun CacheActionsSection(
-    onClearCache: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+internal fun CacheActionsSection(onClearCache: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         SectionHeader(title = "キャッシュ操作")
         Row(

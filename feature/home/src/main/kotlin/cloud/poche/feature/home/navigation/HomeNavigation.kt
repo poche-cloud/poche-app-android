@@ -15,10 +15,7 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     navigate(HomeRoute, navOptions)
 }
 
-fun NavGraphBuilder.homeScreen(
-    onMemoClick: (String) -> Unit,
-    onNavigateToCapture: (MemoType) -> Unit,
-) {
+fun NavGraphBuilder.homeScreen(onMemoClick: (String) -> Unit, onNavigateToCapture: (MemoType) -> Unit) {
     composable<HomeRoute> {
         HomeScreen(
             onMemoClick = onMemoClick,

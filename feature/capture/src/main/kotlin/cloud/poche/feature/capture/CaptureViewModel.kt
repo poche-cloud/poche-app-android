@@ -107,6 +107,12 @@ internal class CaptureViewModel @Inject constructor(
     private var recordingStartTimeMs: Long = 0L
     private var currentRecordingPath: String? = null
 
+    companion object {
+        private const val AUDIO_SAMPLING_RATE = 44100
+        private const val AUDIO_ENCODING_BIT_RATE = 128000
+        private const val TIMER_UPDATE_INTERVAL_MS = 100L
+    }
+
     fun startRecording(context: Context) {
         viewModelScope.launch {
             try {
@@ -114,16 +120,18 @@ internal class CaptureViewModel @Inject constructor(
                 currentRecordingPath = outputFile.absolutePath
 
                 @Suppress("DEPRECATION")
-                recorder = (if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    MediaRecorder(context)
-                } else {
-                    MediaRecorder()
-                }).apply {
+                recorder = (
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        MediaRecorder(context)
+                    } else {
+                        MediaRecorder()
+                    }
+                    ).apply {
                     setAudioSource(MediaRecorder.AudioSource.MIC)
                     setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
                     setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-                    setAudioSamplingRate(44100)
-                    setAudioEncodingBitRate(128000)
+                    setAudioSamplingRate(AUDIO_SAMPLING_RATE)
+                    setAudioEncodingBitRate(AUDIO_ENCODING_BIT_RATE)
                     setOutputFile(outputFile.absolutePath)
                     prepare()
                     start()
@@ -134,7 +142,7 @@ internal class CaptureViewModel @Inject constructor(
                     while (true) {
                         val elapsed = System.currentTimeMillis() - recordingStartTimeMs
                         _voiceUiState.value = VoiceCaptureUiState.Recording(elapsedMs = elapsed)
-                        delay(100)
+                        delay(TIMER_UPDATE_INTERVAL_MS)
                     }
                 }
             } catch (e: Exception) {
@@ -191,7 +199,7 @@ internal class CaptureViewModel @Inject constructor(
                             durationMs = totalDurationMs,
                             positionMs = position,
                         )
-                        delay(100)
+                        delay(TIMER_UPDATE_INTERVAL_MS)
                     }
                     _voiceUiState.value = VoiceCaptureUiState.Recorded(
                         filePath = filePath,

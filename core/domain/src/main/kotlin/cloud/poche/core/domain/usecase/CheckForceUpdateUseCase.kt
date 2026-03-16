@@ -3,21 +3,18 @@ package cloud.poche.core.domain.usecase
 import cloud.poche.core.domain.repository.RemoteConfigManager
 import javax.inject.Inject
 
-class CheckForceUpdateUseCase @Inject constructor(
-    private val remoteConfigManager: RemoteConfigManager,
-) {
-    suspend operator fun invoke(currentVersion: String): ForceUpdateStatus =
-        try {
-            remoteConfigManager.fetchAndActivate()
-            val minVersion = remoteConfigManager.getMinAppVersion()
-            if (compareVersions(currentVersion, minVersion) < 0) {
-                ForceUpdateStatus.UPDATE_REQUIRED
-            } else {
-                ForceUpdateStatus.UP_TO_DATE
-            }
-        } catch (_: Exception) {
-            ForceUpdateStatus.CHECK_FAILED
+class CheckForceUpdateUseCase @Inject constructor(private val remoteConfigManager: RemoteConfigManager) {
+    suspend operator fun invoke(currentVersion: String): ForceUpdateStatus = try {
+        remoteConfigManager.fetchAndActivate()
+        val minVersion = remoteConfigManager.getMinAppVersion()
+        if (compareVersions(currentVersion, minVersion) < 0) {
+            ForceUpdateStatus.UPDATE_REQUIRED
+        } else {
+            ForceUpdateStatus.UP_TO_DATE
         }
+    } catch (_: Exception) {
+        ForceUpdateStatus.CHECK_FAILED
+    }
 
     private fun compareVersions(current: String, min: String): Int {
         val currentParts = current.split(".").map { it.toIntOrNull() ?: 0 }

@@ -11,9 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class UserPreferencesDataSource @Inject constructor(
-    private val dataStore: DataStore<Preferences>,
-) {
+class UserPreferencesDataSource @Inject constructor(private val dataStore: DataStore<Preferences>) {
     val userData: Flow<UserData> = dataStore.data.map { prefs ->
         UserData(
             isOnboardingCompleted = prefs[ONBOARDING_COMPLETED] ?: false,
@@ -75,6 +73,5 @@ class UserPreferencesDataSource @Inject constructor(
     }
 }
 
-private fun String.toDarkThemeConfig(): DarkThemeConfig =
-    runCatching { DarkThemeConfig.valueOf(this) }
-        .getOrDefault(DarkThemeConfig.FOLLOW_SYSTEM)
+private fun String.toDarkThemeConfig(): DarkThemeConfig = runCatching { DarkThemeConfig.valueOf(this) }
+    .getOrDefault(DarkThemeConfig.FOLLOW_SYSTEM)

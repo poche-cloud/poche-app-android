@@ -58,6 +58,7 @@ internal fun HomeScreen(
                 is HomeEvent.ShowError -> {
                     snackbarHostState.showSnackbar(event.message)
                 }
+
                 is HomeEvent.CaptureSuccess -> Unit
             }
         }
@@ -107,6 +108,7 @@ internal fun HomeScreen(
                             CircularProgressIndicator()
                         }
                     }
+
                     is HomeUiState.Success -> {
                         if (uiState.memos.isEmpty()) {
                             EmptyState()
@@ -118,6 +120,7 @@ internal fun HomeScreen(
                             )
                         }
                     }
+
                     is HomeUiState.Error -> {
                         ErrorState(
                             message = uiState.message,
@@ -176,11 +179,7 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ErrorState(
-    message: String,
-    onRetry: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun ErrorState(message: String, onRetry: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,

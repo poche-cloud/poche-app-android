@@ -13,9 +13,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class OnboardingViewModel @Inject constructor(
-    private val completeOnboardingUseCase: CompleteOnboardingUseCase,
-) : ViewModel() {
+class OnboardingViewModel @Inject constructor(private val completeOnboardingUseCase: CompleteOnboardingUseCase) :
+    ViewModel() {
 
     private val _currentPage = MutableStateFlow(0)
     val currentPage: StateFlow<Int> = _currentPage.asStateFlow()

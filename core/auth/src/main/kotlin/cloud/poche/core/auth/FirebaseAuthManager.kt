@@ -7,9 +7,7 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirebaseAuthManager @Inject constructor(
-    private val firebaseAuth: FirebaseAuth,
-) : AuthManager {
+class FirebaseAuthManager @Inject constructor(private val firebaseAuth: FirebaseAuth) : AuthManager {
 
     override val isSignedIn: Flow<Boolean> = callbackFlow {
         val listener = FirebaseAuth.AuthStateListener { auth ->
