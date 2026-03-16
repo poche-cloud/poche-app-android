@@ -97,7 +97,6 @@ dependencies {
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.config)
 
-
     // Testing
     testImplementation(libs.junit5.api)
     testRuntimeOnly(libs.junit5.engine)

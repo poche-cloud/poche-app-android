@@ -1,6 +1,5 @@
 package cloud.poche.feature.settings.licenses
 
-import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,15 +19,10 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun OssLicensesScreen(
-    onBackClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    val context = LocalContext.current
+internal fun OssLicensesScreen(onBackClick: () -> Unit, modifier: Modifier = Modifier) {
     val dependencies = remember {
         buildList {
             add("Jetpack Compose" to "Apache License 2.0")

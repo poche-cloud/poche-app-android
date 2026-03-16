@@ -15,9 +15,7 @@ fun NavController.navigateToMemoDetail(memoId: String, navOptions: NavOptions? =
     navigate(MemoDetailRoute(memoId), navOptions)
 }
 
-fun NavGraphBuilder.memoDetailScreen(
-    onBackClick: () -> Unit,
-) {
+fun NavGraphBuilder.memoDetailScreen(onBackClick: () -> Unit) {
     composable<MemoDetailRoute> { backStackEntry ->
         val route = backStackEntry.toRoute<MemoDetailRoute>()
         MemoDetailScreen(

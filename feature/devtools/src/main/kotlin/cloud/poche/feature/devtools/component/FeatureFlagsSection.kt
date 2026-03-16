@@ -19,10 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun FeatureFlagsSection(
-    flags: Map<String, Boolean>,
-    modifier: Modifier = Modifier,
-) {
+internal fun FeatureFlagsSection(flags: Map<String, Boolean>, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         SectionHeader(title = "機能フラグ")
         if (flags.isEmpty()) {
@@ -41,11 +38,7 @@ internal fun FeatureFlagsSection(
 }
 
 @Composable
-private fun FeatureFlagItem(
-    name: String,
-    enabled: Boolean,
-    modifier: Modifier = Modifier,
-) {
+private fun FeatureFlagItem(name: String, enabled: Boolean, modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()

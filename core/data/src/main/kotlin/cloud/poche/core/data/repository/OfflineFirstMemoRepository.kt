@@ -9,17 +9,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class OfflineFirstMemoRepository @Inject constructor(
-    private val memoDao: MemoDao,
-) : MemoRepository {
+class OfflineFirstMemoRepository @Inject constructor(private val memoDao: MemoDao) : MemoRepository {
 
-    override fun getMemos(): Flow<List<Memo>> =
-        memoDao.getMemos().map { entities ->
-            entities.map { it.toDomain() }
-        }
+    override fun getMemos(): Flow<List<Memo>> = memoDao.getMemos().map { entities ->
+        entities.map { it.toDomain() }
+    }
 
-    override fun getMemo(id: String): Flow<Memo> =
-        memoDao.getMemo(id).map { it.toDomain() }
+    override fun getMemo(id: String): Flow<Memo> = memoDao.getMemo(id).map { it.toDomain() }
 
     override suspend fun createMemo(memo: Memo) {
         memoDao.insertMemo(memo.toEntity())
@@ -33,11 +29,9 @@ class OfflineFirstMemoRepository @Inject constructor(
         memoDao.deleteMemo(id)
     }
 
-    override suspend fun getMemoCount(): Int =
-        memoDao.getMemoCount()
+    override suspend fun getMemoCount(): Int = memoDao.getMemoCount()
 
-    override suspend fun deleteAll() =
-        memoDao.deleteAll()
+    override suspend fun deleteAll() = memoDao.deleteAll()
 }
 
 private fun MemoEntity.toDomain() = Memo(

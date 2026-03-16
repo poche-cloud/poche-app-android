@@ -13,16 +13,11 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class CaptureRoute(val memoType: String = MemoType.TEXT.name)
 
-fun NavController.navigateToCapture(
-    memoType: MemoType = MemoType.TEXT,
-    navOptions: NavOptions? = null,
-) {
+fun NavController.navigateToCapture(memoType: MemoType = MemoType.TEXT, navOptions: NavOptions? = null) {
     navigate(CaptureRoute(memoType = memoType.name), navOptions)
 }
 
-fun NavGraphBuilder.captureScreen(
-    onCaptureComplete: () -> Unit,
-) {
+fun NavGraphBuilder.captureScreen(onCaptureComplete: () -> Unit) {
     composable<CaptureRoute>(
         deepLinks = listOf(
             navDeepLink { uriPattern = "poche://capture?type={memoType}" },

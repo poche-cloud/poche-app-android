@@ -8,6 +8,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply("com.android.application")
+            pluginManager.apply("poche.android.detekt")
+            pluginManager.apply("poche.android.spotless")
 
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)

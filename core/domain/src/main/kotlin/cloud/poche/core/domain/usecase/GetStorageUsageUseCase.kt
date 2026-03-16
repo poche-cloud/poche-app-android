@@ -6,9 +6,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import javax.inject.Inject
 
-class GetStorageUsageUseCase @Inject constructor(
-    @ApplicationContext private val context: Context,
-) {
+class GetStorageUsageUseCase @Inject constructor(@ApplicationContext private val context: Context) {
     operator fun invoke(): StorageUsage {
         val dbFile = context.getDatabasePath("poche-database")
         val databaseSize = if (dbFile.exists()) dbFile.length() else 0L

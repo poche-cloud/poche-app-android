@@ -44,10 +44,7 @@ class CaptureWidget : GlanceAppWidget() {
 }
 
 @androidx.compose.runtime.Composable
-private fun CaptureWidgetContent(
-    memoCount: Int,
-    context: Context,
-) {
+private fun CaptureWidgetContent(memoCount: Int, context: Context) {
     Column(
         modifier = GlanceModifier.fillMaxWidth().padding(12.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -84,11 +81,7 @@ private fun CaptureWidgetContent(
 }
 
 @androidx.compose.runtime.Composable
-private fun CaptureButton(
-    label: String,
-    deepLink: String,
-    modifier: GlanceModifier = GlanceModifier,
-) {
+private fun CaptureButton(label: String, deepLink: String, modifier: GlanceModifier = GlanceModifier) {
     val intent = Intent(Intent.ACTION_VIEW, Uri.parse(deepLink))
     Text(
         text = label,

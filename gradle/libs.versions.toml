@@ -150,6 +150,8 @@ compose-gradlePlugin = { group = "org.jetbrains.kotlin", name = "compose-compile
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
 hilt-gradlePlugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
+detekt-gradlePlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
+spotless-gradlePlugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -174,3 +176,5 @@ poche-android-room = { id = "poche.android.room", version = "unspecified" }
 poche-android-feature = { id = "poche.android.feature", version = "unspecified" }
 poche-kotlin-library = { id = "poche.kotlin.library", version = "unspecified" }
 poche-android-testing = { id = "poche.android.testing", version = "unspecified" }
+poche-android-detekt = { id = "poche.android.detekt", version = "unspecified" }
+poche-android-spotless = { id = "poche.android.spotless", version = "unspecified" }

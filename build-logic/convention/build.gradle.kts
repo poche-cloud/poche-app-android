@@ -9,6 +9,8 @@ dependencies {
     compileOnly(libs.ksp.gradlePlugin)
     compileOnly(libs.room.gradlePlugin)
     compileOnly(libs.hilt.gradlePlugin)
+    compileOnly(libs.detekt.gradlePlugin)
+    compileOnly(libs.spotless.gradlePlugin)
 }
 
 gradlePlugin {
@@ -44,6 +46,14 @@ gradlePlugin {
         register("androidTesting") {
             id = "poche.android.testing"
             implementationClass = "AndroidTestingConventionPlugin"
+        }
+        register("detekt") {
+            id = "poche.android.detekt"
+            implementationClass = "DetektConventionPlugin"
+        }
+        register("spotless") {
+            id = "poche.android.spotless"
+            implementationClass = "SpotlessConventionPlugin"
         }
     }
 }

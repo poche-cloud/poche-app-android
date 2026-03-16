@@ -8,9 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class NotificationHelper @Inject constructor(
-    @ApplicationContext private val context: Context,
-) {
+class NotificationHelper @Inject constructor(@ApplicationContext private val context: Context) {
     fun createNotificationChannel() {
         val channel = NotificationChannel(
             CHANNEL_ID,

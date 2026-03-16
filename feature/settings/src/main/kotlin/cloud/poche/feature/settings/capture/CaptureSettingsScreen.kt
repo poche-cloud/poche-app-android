@@ -71,6 +71,7 @@ private fun CaptureSettingsScreenContent(
     ) { innerPadding ->
         when (uiState) {
             is CaptureSettingsUiState.Loading -> Unit
+
             is CaptureSettingsUiState.Success -> {
                 Column(
                     modifier = Modifier

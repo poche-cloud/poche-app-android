@@ -10,11 +10,7 @@ import androidx.compose.ui.Modifier
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PocheTopAppBar(
-    title: String,
-    modifier: Modifier = Modifier,
-    scrollBehavior: TopAppBarScrollBehavior? = null,
-) {
+fun PocheTopAppBar(title: String, modifier: Modifier = Modifier, scrollBehavior: TopAppBarScrollBehavior? = null) {
     CenterAlignedTopAppBar(
         title = { Text(text = title) },
         modifier = modifier,

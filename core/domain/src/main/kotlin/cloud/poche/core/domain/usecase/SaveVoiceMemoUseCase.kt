@@ -6,9 +6,7 @@ import cloud.poche.core.model.MemoType
 import java.util.UUID
 import javax.inject.Inject
 
-class SaveVoiceMemoUseCase @Inject constructor(
-    private val memoRepository: MemoRepository,
-) {
+class SaveVoiceMemoUseCase @Inject constructor(private val memoRepository: MemoRepository) {
     suspend operator fun invoke(filePath: String, durationMs: Long, caption: String = "") {
         val now = System.currentTimeMillis()
         val memo = Memo(

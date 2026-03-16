@@ -10,9 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 
 @Composable
-fun ForceUpdateDialog(
-    packageName: String,
-) {
+fun ForceUpdateDialog(packageName: String) {
     val context = LocalContext.current
     AlertDialog(
         onDismissRequest = { /* non-dismissable */ },

@@ -76,6 +76,7 @@ internal fun ThemeSettingsScreen(
     ) { innerPadding ->
         when (uiState) {
             is ThemeSettingsUiState.Loading -> Unit
+
             is ThemeSettingsUiState.Success -> {
                 Column(
                     modifier = Modifier

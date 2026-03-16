@@ -9,12 +9,12 @@ import javax.inject.Singleton
 @Singleton
 class SyncManagerImpl @Inject constructor() : SyncManager {
 
-    private val _isSyncing = MutableStateFlow(false)
+    private val isSyncingState = MutableStateFlow(false)
 
     override suspend fun sync(): Result<Unit> {
         // Stub: actual sync logic deferred until backend API is defined
         return Result.success(Unit)
     }
 
-    override fun isSyncing(): Flow<Boolean> = _isSyncing
+    override fun isSyncing(): Flow<Boolean> = isSyncingState
 }

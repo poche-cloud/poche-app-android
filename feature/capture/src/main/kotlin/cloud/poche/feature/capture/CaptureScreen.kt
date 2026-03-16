@@ -3,6 +3,7 @@
 package cloud.poche.feature.capture
 
 import android.Manifest
+import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -60,7 +61,6 @@ import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cloud.poche.core.model.MemoType
-import android.content.Context
 import coil3.compose.AsyncImage
 import java.io.File
 
@@ -84,6 +84,7 @@ internal fun CaptureScreen(
                     snackbarHostState.showSnackbar("保存しました")
                     onCaptureComplete()
                 }
+
                 is CaptureEvent.ShowError ->
                     snackbarHostState.showSnackbar(event.message)
             }
@@ -119,6 +120,7 @@ internal fun CaptureScreen(
                 onSave = viewModel::saveMemo,
                 modifier = Modifier.padding(innerPadding),
             )
+
             MemoType.PHOTO -> PhotoCaptureContent(
                 uiState = photoUiState,
                 onPhotoCaptured = viewModel::onPhotoCaptured,
@@ -126,6 +128,7 @@ internal fun CaptureScreen(
                 onSave = viewModel::savePhoto,
                 modifier = Modifier.padding(innerPadding),
             )
+
             MemoType.VOICE -> VoiceCaptureContent(
                 uiState = voiceUiState,
                 onStartRecording = { viewModel.startRecording(it) },
@@ -143,11 +146,7 @@ internal fun CaptureScreen(
 // region Memo
 
 @Composable
-private fun MemoCaptureContent(
-    isSaving: Boolean,
-    onSave: (String) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun MemoCaptureContent(isSaving: Boolean, onSave: (String) -> Unit, modifier: Modifier = Modifier) {
     var content by rememberSaveable { mutableStateOf("") }
 
     Column(
@@ -199,12 +198,14 @@ private fun PhotoCaptureContent(
             onPhotoCaptured = onPhotoCaptured,
             modifier = modifier,
         )
+
         is PhotoCaptureUiState.Preview -> PhotoPreviewView(
             imageUri = uiState.imageUri,
             onRetake = onClearPhoto,
             onSave = onSave,
             modifier = modifier,
         )
+
         is PhotoCaptureUiState.Saving -> {
             Column(
                 modifier = modifier.fillMaxSize(),
@@ -218,10 +219,7 @@ private fun PhotoCaptureContent(
 }
 
 @Composable
-private fun PhotoPickerView(
-    onPhotoCaptured: (Uri) -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun PhotoPickerView(onPhotoCaptured: (Uri) -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var tempImageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -383,11 +381,13 @@ private fun VoiceCaptureContent(
             },
             modifier = modifier,
         )
+
         is VoiceCaptureUiState.Recording -> VoiceRecordingView(
             elapsedMs = uiState.elapsedMs,
             onStop = onStopRecording,
             modifier = modifier,
         )
+
         is VoiceCaptureUiState.Recorded -> VoiceRecordedView(
             filePath = uiState.filePath,
             durationMs = uiState.durationMs,
@@ -396,6 +396,7 @@ private fun VoiceCaptureContent(
             onSave = onSave,
             modifier = modifier,
         )
+
         is VoiceCaptureUiState.Playing -> VoicePlayingView(
             filePath = uiState.filePath,
             durationMs = uiState.durationMs,
@@ -405,6 +406,7 @@ private fun VoiceCaptureContent(
             onSave = onSave,
             modifier = modifier,
         )
+
         is VoiceCaptureUiState.Saving -> {
             Column(
                 modifier = modifier.fillMaxSize(),
@@ -418,10 +420,7 @@ private fun VoiceCaptureContent(
 }
 
 @Composable
-private fun VoiceReadyView(
-    onStartRecording: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun VoiceReadyView(onStartRecording: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -458,11 +457,7 @@ private fun VoiceReadyView(
 }
 
 @Composable
-private fun VoiceRecordingView(
-    elapsedMs: Long,
-    onStop: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
+private fun VoiceRecordingView(elapsedMs: Long, onStop: () -> Unit, modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,

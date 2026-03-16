@@ -44,7 +44,9 @@ class HomeViewModel @Inject constructor(
                     .map { result ->
                         when (result) {
                             is Result.Loading -> HomeUiState.Loading
+
                             is Result.Success -> HomeUiState.Success(memos = result.data)
+
                             is Result.Error -> HomeUiState.Error(
                                 message = result.exception.message ?: "不明なエラー",
                             )

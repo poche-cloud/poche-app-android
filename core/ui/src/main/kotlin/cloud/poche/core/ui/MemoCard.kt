@@ -22,12 +22,7 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun MemoCard(
-    memo: Memo,
-    onClick: () -> Unit,
-    onDelete: (() -> Unit)? = null,
-    modifier: Modifier = Modifier,
-) {
+fun MemoCard(memo: Memo, onClick: () -> Unit, onDelete: (() -> Unit)? = null, modifier: Modifier = Modifier) {
     Card(
         onClick = onClick,
         modifier = modifier.fillMaxWidth(),
@@ -66,7 +61,6 @@ fun MemoCard(
 private val dateTimeFormatter: DateTimeFormatter =
     DateTimeFormatter.ofPattern("yyyy/M/d H:mm")
 
-private fun formatEpochMillis(epochMillis: Long): String =
-    Instant.ofEpochMilli(epochMillis)
-        .atZone(ZoneId.systemDefault())
-        .format(dateTimeFormatter)
+private fun formatEpochMillis(epochMillis: Long): String = Instant.ofEpochMilli(epochMillis)
+    .atZone(ZoneId.systemDefault())
+    .format(dateTimeFormatter)
