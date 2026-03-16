@@ -176,5 +176,6 @@ poche-android-room = { id = "poche.android.room", version = "unspecified" }
 poche-android-feature = { id = "poche.android.feature", version = "unspecified" }
 poche-kotlin-library = { id = "poche.kotlin.library", version = "unspecified" }
 poche-android-testing = { id = "poche.android.testing", version = "unspecified" }
+poche-android-gmd = { id = "poche.android.gmd", version = "unspecified" }
 poche-android-detekt = { id = "poche.android.detekt", version = "unspecified" }
 poche-android-spotless = { id = "poche.android.spotless", version = "unspecified" }
