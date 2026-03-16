@@ -8,6 +8,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:datastore"))
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
+    implementation(libs.androidx.core.ktx)
 }
