@@ -3,11 +3,12 @@ name: CI
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+  merge_group:
   push:
     branches: [main]
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.merge_group.head_ref || github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -160,3 +161,14 @@ jobs:
         continue-on-error: true
         with:
           fail-on-severity: high
+
+  ci-gate:
+    needs: [build-and-test, instrumented-test, dependency-review]
+    if: >-
+      always() &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - run: echo "All CI checks passed"
