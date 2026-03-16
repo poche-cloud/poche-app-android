@@ -35,6 +35,15 @@ jobs:
           mkdir -p ~/.gradle
           cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
+      - name: Create dummy google-services.json for CI
+        run: |
+          for flavor in dev stg prod; do
+            mkdir -p app/src/$flavor
+            cat > app/src/$flavor/google-services.json << 'GSEOF'
+          {"project_info":{"project_number":"000000000000","project_id":"dummy-ci","storage_bucket":"dummy-ci.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:000000000000:android:0000000000000000","android_client_info":{"package_name":"cloud.poche.app"}},"api_key":[{"current_key":"dummy-api-key"}]}],"configuration_version":"1"}
+          GSEOF
+          done
+
       - uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5.0.2
         with:
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
