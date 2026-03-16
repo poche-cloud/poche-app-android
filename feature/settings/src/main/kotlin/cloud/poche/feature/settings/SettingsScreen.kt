@@ -64,6 +64,8 @@ internal fun SettingsScreen(
     onNavigateToNotifications: () -> Unit,
     onNavigateToLanguage: () -> Unit,
     onNavigateToLicenses: () -> Unit,
+    onNavigateToCaptureSettings: () -> Unit,
+    onNavigateToDataManagement: () -> Unit,
     onNavigateToDevTools: () -> Unit,
     onSignedOut: () -> Unit,
     onAccountDeleted: () -> Unit,
@@ -90,6 +92,8 @@ internal fun SettingsScreen(
         onNavigateToNotifications = onNavigateToNotifications,
         onNavigateToLanguage = onNavigateToLanguage,
         onNavigateToLicenses = onNavigateToLicenses,
+        onNavigateToCaptureSettings = onNavigateToCaptureSettings,
+        onNavigateToDataManagement = onNavigateToDataManagement,
         onNavigateToDevTools = onNavigateToDevTools,
         onSignOutClick = viewModel::signOut,
         onDeleteAccountClick = viewModel::deleteAccount,
@@ -106,6 +110,8 @@ internal fun SettingsScreen(
     onNavigateToNotifications: () -> Unit,
     onNavigateToLanguage: () -> Unit,
     onNavigateToLicenses: () -> Unit,
+    onNavigateToCaptureSettings: () -> Unit,
+    onNavigateToDataManagement: () -> Unit,
     onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
@@ -142,6 +148,8 @@ internal fun SettingsScreen(
                     onNavigateToNotifications = onNavigateToNotifications,
                     onNavigateToLanguage = onNavigateToLanguage,
                     onNavigateToLicenses = onNavigateToLicenses,
+                    onNavigateToCaptureSettings = onNavigateToCaptureSettings,
+                    onNavigateToDataManagement = onNavigateToDataManagement,
                     onNavigateToDevTools = onNavigateToDevTools,
                     onSignOutClick = onSignOutClick,
                     onDeleteAccountClick = onDeleteAccountClick,
@@ -159,6 +167,8 @@ private fun SettingsContent(
     onNavigateToNotifications: () -> Unit,
     onNavigateToLanguage: () -> Unit,
     onNavigateToLicenses: () -> Unit,
+    onNavigateToCaptureSettings: () -> Unit,
+    onNavigateToDataManagement: () -> Unit,
     onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
@@ -200,14 +210,14 @@ private fun SettingsContent(
             icon = Icons.Default.FlashOn,
             title = "キャプチャ設定",
             subtitle = "クイックキャプチャの動作を設定",
-            onClick = { /* TODO: キャプチャ設定画面 */ },
+            onClick = onNavigateToCaptureSettings,
         )
         SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.Storage,
             title = "データ管理",
             subtitle = "バックアップと同期の設定",
-            onClick = { /* TODO: データ管理画面 */ },
+            onClick = onNavigateToDataManagement,
         )
 
         // 法務セクション
