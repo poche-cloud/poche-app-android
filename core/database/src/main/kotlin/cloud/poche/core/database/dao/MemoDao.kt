@@ -25,4 +25,13 @@ interface MemoDao {
 
     @Query("DELETE FROM memos WHERE id = :id")
     suspend fun deleteMemo(id: String)
+
+    @Query("SELECT COUNT(*) FROM memos")
+    suspend fun getMemoCount(): Int
+
+    @Query("DELETE FROM memos")
+    suspend fun deleteAll()
+
+    @Query("SELECT * FROM memos WHERE pendingSync = 1")
+    fun getPendingSyncMemos(): Flow<List<MemoEntity>>
 }
