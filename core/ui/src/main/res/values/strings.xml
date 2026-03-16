@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="force_update_title">アップデートが必要です</string>
+    <string name="force_update_message">最新バージョンへのアップデートが必要です。ストアからアップデートしてください。</string>
+    <string name="force_update_button">ストアを開く</string>
+</resources>

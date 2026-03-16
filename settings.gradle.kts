@@ -42,6 +42,7 @@ include(":core:testing")
 include(":core:analytics")
 include(":core:auth")
 include(":core:notifications")
+include(":core:remote-config")
 include(":core:ui")
 
 // Feature modules
@@ -51,3 +52,4 @@ include(":feature:memo")
 include(":feature:settings")
 include(":feature:onboarding")
 include(":feature:devtools")
+include(":feature:widget")

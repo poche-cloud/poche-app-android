@@ -18,6 +18,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,7 +27,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import cloud.poche.app.navigation.PocheNavHost
 import cloud.poche.core.designsystem.theme.PocheTheme
+import cloud.poche.core.domain.usecase.ForceUpdateStatus
 import cloud.poche.core.model.DarkThemeConfig
+import cloud.poche.core.ui.ForceUpdateDialog
 import cloud.poche.feature.home.navigation.HomeRoute
 import cloud.poche.feature.home.navigation.navigateToHome
 import cloud.poche.feature.settings.navigation.SettingsRoute
@@ -41,8 +44,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val currentVersion = packageManager.getPackageInfo(packageName, 0).versionName ?: "1.0.0"
+
         setContent {
             val darkThemeConfig by viewModel.darkThemeConfig.collectAsStateWithLifecycle()
+            val isOnboardingCompleted by viewModel.isOnboardingCompleted.collectAsStateWithLifecycle()
+            val forceUpdateStatus by viewModel.forceUpdateStatus.collectAsStateWithLifecycle()
+
+            LaunchedEffect(Unit) {
+                viewModel.checkForceUpdate(currentVersion)
+            }
 
             val darkTheme = when (darkThemeConfig) {
                 DarkThemeConfig.FOLLOW_SYSTEM -> isSystemInDarkTheme()
@@ -51,14 +62,18 @@ class MainActivity : ComponentActivity() {
             }
 
             PocheTheme(darkTheme = darkTheme) {
-                PocheApp()
+                if (forceUpdateStatus == ForceUpdateStatus.UPDATE_REQUIRED) {
+                    ForceUpdateDialog(packageName = packageName)
+                } else if (isOnboardingCompleted != null) {
+                    PocheApp(isOnboardingCompleted = isOnboardingCompleted!!)
+                }
             }
         }
     }
 }
 
 @Composable
-fun PocheApp() {
+fun PocheApp(isOnboardingCompleted: Boolean) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -106,6 +121,7 @@ fun PocheApp() {
     ) { innerPadding ->
         PocheNavHost(
             navController = navController,
+            isOnboardingCompleted = isOnboardingCompleted,
             modifier = Modifier.padding(innerPadding),
         )
     }

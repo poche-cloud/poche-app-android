@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="force_update_title">Update required</string>
+    <string name="force_update_message">Please update to the latest version from the store.</string>
+    <string name="force_update_button">Open Store</string>
+</resources>
