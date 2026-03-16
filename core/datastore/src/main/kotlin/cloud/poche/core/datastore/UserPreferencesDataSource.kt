@@ -46,10 +46,32 @@ class UserPreferencesDataSource @Inject constructor(
         }
     }
 
+    suspend fun setFcmToken(token: String) {
+        dataStore.edit { prefs ->
+            prefs[FCM_TOKEN] = token
+        }
+    }
+
+    val defaultCaptureType: Flow<String?> = dataStore.data.map { prefs ->
+        prefs[DEFAULT_CAPTURE_TYPE]
+    }
+
+    suspend fun setDefaultCaptureType(type: String?) {
+        dataStore.edit { prefs ->
+            if (type == null) {
+                prefs.remove(DEFAULT_CAPTURE_TYPE)
+            } else {
+                prefs[DEFAULT_CAPTURE_TYPE] = type
+            }
+        }
+    }
+
     private companion object {
         val ONBOARDING_COMPLETED = booleanPreferencesKey("onboarding_completed")
         val DARK_THEME_CONFIG = stringPreferencesKey("dark_theme_config")
         val LOCALE = stringPreferencesKey("locale")
+        val FCM_TOKEN = stringPreferencesKey("fcm_token")
+        val DEFAULT_CAPTURE_TYPE = stringPreferencesKey("default_capture_type")
     }
 }
 

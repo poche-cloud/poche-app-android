@@ -13,17 +13,21 @@ import cloud.poche.feature.home.navigation.homeScreen
 import cloud.poche.feature.home.navigation.navigateToHome
 import cloud.poche.feature.memo.navigation.memoDetailScreen
 import cloud.poche.feature.memo.navigation.navigateToMemoDetail
+import cloud.poche.feature.onboarding.navigation.OnboardingRoute
 import cloud.poche.feature.onboarding.navigation.onboardingScreen
 import cloud.poche.feature.settings.navigation.settingsScreen
 
 @Composable
 fun PocheNavHost(
     navController: NavHostController,
+    isOnboardingCompleted: Boolean,
     modifier: Modifier = Modifier,
 ) {
+    val startDestination: Any = if (isOnboardingCompleted) HomeRoute else OnboardingRoute
+
     NavHost(
         navController = navController,
-        startDestination = HomeRoute,
+        startDestination = startDestination,
         modifier = modifier,
     ) {
         homeScreen(
@@ -54,11 +58,16 @@ fun PocheNavHost(
                     },
                 )
             },
-            onLicensesClick = { /* TODO: OSSライセンス画面へ遷移 */ },
             onDevToolsClick = { navController.navigateToDevTools() },
         )
         onboardingScreen(
-            onComplete = { navController.popBackStack() },
+            onComplete = {
+                navController.navigateToHome(
+                    androidx.navigation.navOptions {
+                        popUpTo<OnboardingRoute> { inclusive = true }
+                    },
+                )
+            },
         )
         devToolsScreen(
             onBackClick = { navController.popBackStack() },

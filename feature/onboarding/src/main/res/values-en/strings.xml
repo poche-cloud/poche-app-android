@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_welcome_title">Welcome to Poche</string>
+    <string name="onboarding_welcome_description">Ideas in your pocket</string>
+    <string name="onboarding_capture_title">Capture instantly</string>
+    <string name="onboarding_capture_description">Quickly capture with text, photo, or voice</string>
+    <string name="onboarding_organize_title">Organize</string>
+    <string name="onboarding_organize_description">Review and organize your memos</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_get_started">Get Started</string>
+</resources>

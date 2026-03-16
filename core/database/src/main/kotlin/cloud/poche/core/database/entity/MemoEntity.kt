@@ -1,5 +1,6 @@
 package cloud.poche.core.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -13,4 +14,6 @@ data class MemoEntity(
     val updatedAt: Long,
     val filePath: String? = null,
     val durationMs: Long? = null,
+    @ColumnInfo(defaultValue = "0")
+    val pendingSync: Boolean = false,
 )

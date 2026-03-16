@@ -32,6 +32,12 @@ class OfflineFirstMemoRepository @Inject constructor(
     override suspend fun deleteMemo(id: String) {
         memoDao.deleteMemo(id)
     }
+
+    override suspend fun getMemoCount(): Int =
+        memoDao.getMemoCount()
+
+    override suspend fun deleteAll() =
+        memoDao.deleteAll()
 }
 
 private fun MemoEntity.toDomain() = Memo(

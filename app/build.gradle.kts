@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":core:analytics"))
     implementation(project(":core:auth"))
     implementation(project(":core:notifications"))
+    implementation(project(":core:remote-config"))
     implementation(project(":core:ui"))
 
     // Feature modules
@@ -77,6 +78,7 @@ dependencies {
     implementation(project(":feature:settings"))
     implementation(project(":feature:onboarding"))
     implementation(project(":feature:devtools"))
+    implementation(project(":feature:widget"))
 
     // AndroidX
     implementation(libs.androidx.core.ktx)
@@ -94,6 +96,7 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.config)
+
 
     // Testing
     testImplementation(libs.junit5.api)

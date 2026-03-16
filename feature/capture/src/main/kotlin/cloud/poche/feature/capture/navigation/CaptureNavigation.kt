@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import androidx.navigation.toRoute
 import cloud.poche.core.model.MemoType
 import cloud.poche.feature.capture.CaptureScreen
@@ -22,7 +23,11 @@ fun NavController.navigateToCapture(
 fun NavGraphBuilder.captureScreen(
     onCaptureComplete: () -> Unit,
 ) {
-    composable<CaptureRoute> { backStackEntry ->
+    composable<CaptureRoute>(
+        deepLinks = listOf(
+            navDeepLink { uriPattern = "poche://capture?type={memoType}" },
+        ),
+    ) { backStackEntry ->
         val route = backStackEntry.toRoute<CaptureRoute>()
         val memoType = runCatching { MemoType.valueOf(route.memoType) }
             .getOrDefault(MemoType.TEXT)

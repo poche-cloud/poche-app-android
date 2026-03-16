@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="onboarding_welcome_title">Poche へようこそ</string>
+    <string name="onboarding_welcome_description">ポケットにアイデアを</string>
+    <string name="onboarding_capture_title">すぐにメモ</string>
+    <string name="onboarding_capture_description">テキスト、写真、音声で素早くキャプチャ</string>
+    <string name="onboarding_organize_title">整理する</string>
+    <string name="onboarding_organize_description">メモを見返して整理しましょう</string>
+    <string name="onboarding_skip">スキップ</string>
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_get_started">はじめる</string>
+</resources>
