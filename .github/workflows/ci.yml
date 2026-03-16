@@ -37,10 +37,20 @@ jobs:
 
       - name: Create dummy google-services.json for CI
         run: |
-          json='{"project_info":{"project_number":"000000000000","project_id":"dummy-ci","storage_bucket":"dummy-ci.appspot.com"},"client":[{"client_info":{"mobilesdk_app_id":"1:000000000000:android:0000000000000000","android_client_info":{"package_name":"cloud.poche.app"}},"api_key":[{"current_key":"dummy-api-key"}]}],"configuration_version":"1"}'
-          for flavor in dev stg prod; do
-            mkdir -p "app/src/$flavor"
-            echo "$json" > "app/src/$flavor/google-services.json"
+          for flavor_dir in dev stg prod; do
+            mkdir -p "app/src/$flavor_dir"
+            python3 -c "
+          import json, sys
+          pkgs = ['cloud.poche.app', 'cloud.poche.app.debug',
+                  'cloud.poche.app.dev', 'cloud.poche.app.dev.debug',
+                  'cloud.poche.app.stg', 'cloud.poche.app.stg.debug']
+          clients = [{'client_info': {'mobilesdk_app_id': '1:000000000000:android:0000000000000000',
+                      'android_client_info': {'package_name': p}},
+                      'api_key': [{'current_key': 'dummy'}]} for p in pkgs]
+          doc = {'project_info': {'project_number': '000000000000', 'project_id': 'dummy-ci',
+                 'storage_bucket': 'dummy-ci.appspot.com'}, 'client': clients, 'configuration_version': '1'}
+          json.dump(doc, open('app/src/$flavor_dir/google-services.json', 'w'))
+          "
           done
 
       - uses: gradle/actions/setup-gradle@0723195856401067f7a2779048b490ace7a47d7c # v5.0.2
