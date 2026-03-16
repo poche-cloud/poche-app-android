@@ -3,11 +3,12 @@ name: CodeQL
 on:
   pull_request:
     branches: [main]
+  merge_group:
   schedule:
     - cron: '0 18 * * 0' # Sunday 3:00 JST (18:00 UTC Saturday)
 
 concurrency:
-  group: codeql-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.merge_group.head_ref || github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -64,3 +65,14 @@ jobs:
         uses: github/codeql-action/analyze@9792ccaef0455e446c567163589397e8c3ac2e0d # v3
         with:
           category: /language:java-kotlin
+
+  codeql-gate:
+    needs: [analyze]
+    if: >-
+      always() &&
+      !contains(needs.*.result, 'failure') &&
+      !contains(needs.*.result, 'cancelled')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - run: echo "CodeQL passed"
