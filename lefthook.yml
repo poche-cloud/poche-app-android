@@ -1,0 +1,12 @@
+# lefthook.yml for Android
+pre-commit:
+  parallel: true
+  commands:
+    spotless:
+      root: "poche-app-android/"
+      glob: "*.{kt,kts,gradle,xml}"
+      run: "./gradlew spotlessApply"
+    detekt:
+      root: "poche-app-android/"
+      glob: "*.kt"
+      run: "./gradlew detekt"
