@@ -123,7 +123,7 @@ internal fun SettingsScreen(
         modifier = modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             PocheTopAppBar(
-                title = "設定",
+                title = stringResource(id = cloud.poche.core.ui.R.string.settings_title),
                 scrollBehavior = scrollBehavior,
             )
         },
@@ -242,8 +242,12 @@ private fun SettingsContent(
             },
         )
 
-        // アプリについてセクション
-        SettingsSectionHeader(title = "アプリについて")
+        SettingsSectionHeader(title = stringResource(id = cloud.poche.core.ui.R.string.settings_language), isFirst = false)
+        SettingsItem(
+            title = stringResource(id = cloud.poche.core.ui.R.string.settings_language),
+            subtitle = "日本語 / English",
+            onClick = onNavigateToLanguageSettings
+        )
         SettingsListTile(
             icon = Icons.Default.Description,
             title = "オープンソースライセンス",
@@ -281,7 +285,7 @@ private fun SettingsContent(
             SettingsDivider()
             SettingsListTile(
                 icon = Icons.Default.DeleteForever,
-                title = "アカウント削除",
+                title = stringResource(id = cloud.poche.core.ui.R.string.settings_delete_account),
                 subtitle = "アカウントとデータを完全に削除",
                 onClick = { showDeleteAccountDialog = true },
                 isDestructive = true,
@@ -306,7 +310,7 @@ private fun SettingsContent(
 
     if (showDeleteAccountDialog) {
         ConfirmDialog(
-            title = "アカウント削除",
+            title = stringResource(id = cloud.poche.core.ui.R.string.settings_delete_account),
             message = "この操作は取り消せません。アカウントとすべてのデータが完全に削除されます。本当に削除しますか？",
             confirmText = "削除",
             onConfirm = {
