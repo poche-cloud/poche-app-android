@@ -41,6 +41,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 
 @Composable
 internal fun MemoDetailScreen(

@@ -2,6 +2,7 @@ package cloud.poche.core.network
 
 import cloud.poche.core.network.model.NetworkBookmark
 import cloud.poche.core.network.model.NetworkMemo
+import cloud.poche.core.network.model.NetworkSearchResult
 
 interface PocheNetworkDataSource {
     suspend fun getBookmarks(): List<NetworkBookmark>
@@ -16,5 +17,3 @@ interface PocheNetworkDataSource {
 
     suspend fun search(query: String): List<NetworkSearchResult>
 }
-
-data class NetworkSearchResult(val id: String, val type: String, val title: String, val score: Double)

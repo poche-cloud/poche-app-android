@@ -1,4 +1,4 @@
-package cloud.poche.core.common
+package cloud.poche.core.ui
 
 import android.content.Context
 import androidx.annotation.StringRes

@@ -7,8 +7,8 @@ import cloud.poche.core.data.repository.OfflineFirstUserDataRepository
 import cloud.poche.core.domain.repository.MemoRepository
 import cloud.poche.core.domain.repository.UserDataRepository
 import dagger.Binds
-import dagger.InstallIn
 import dagger.Module
+import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
 @Module

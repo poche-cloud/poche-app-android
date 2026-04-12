@@ -53,9 +53,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.ui.R
 import cloud.poche.core.designsystem.component.PocheTopAppBar
 
 @Composable
@@ -74,13 +76,14 @@ internal fun SettingsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
                 is SettingsEvent.SignedOut -> onSignedOut()
                 is SettingsEvent.AccountDeleted -> onAccountDeleted()
-                is SettingsEvent.ShowError -> snackbarHostState.showSnackbar(event.message)
+                is SettingsEvent.ShowError -> snackbarHostState.showSnackbar(event.message.asString(context))
             }
         }
     }
@@ -221,11 +224,11 @@ private fun SettingsContent(
         )
 
         // 法務セクション
-        SettingsSectionHeader(title = "法務")
+        SettingsSectionHeader(title = stringResource(R.string.settings_section_legal))
         SettingsListTile(
             icon = Icons.Default.Description,
-            title = "利用規約",
-            subtitle = "サービスの利用規約を確認",
+            title = stringResource(R.string.settings_terms_of_service),
+            subtitle = stringResource(R.string.settings_terms_of_service_subtitle),
             onClick = {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://poche.cloud/terms"))
                 context.startActivity(intent)
@@ -234,24 +237,26 @@ private fun SettingsContent(
         SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.PrivacyTip,
-            title = "プライバシーポリシー",
-            subtitle = "個人情報の取り扱いを確認",
+            title = stringResource(R.string.settings_privacy_policy),
+            subtitle = stringResource(R.string.settings_privacy_policy_subtitle),
             onClick = {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://poche.cloud/privacy"))
                 context.startActivity(intent)
             },
         )
 
-        SettingsSectionHeader(title = stringResource(id = cloud.poche.core.ui.R.string.settings_language), isFirst = false)
-        SettingsItem(
-            title = stringResource(id = cloud.poche.core.ui.R.string.settings_language),
+        SettingsSectionHeader(title = stringResource(R.string.settings_language))
+        SettingsListTile(
+            icon = Icons.Default.Language,
+            title = stringResource(R.string.settings_language),
             subtitle = "日本語 / English",
-            onClick = onNavigateToLanguageSettings
+            onClick = onNavigateToLanguage
         )
+        SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.Description,
-            title = "オープンソースライセンス",
-            subtitle = "使用しているオープンソースソフトウェア",
+            title = stringResource(R.string.settings_oss_licenses),
+            subtitle = stringResource(R.string.settings_oss_licenses_subtitle),
             onClick = onNavigateToLicenses,
         )
         SettingsDivider()

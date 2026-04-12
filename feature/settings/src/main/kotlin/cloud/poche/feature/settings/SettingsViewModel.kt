@@ -5,6 +5,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import cloud.poche.core.auth.AuthManager
 import cloud.poche.core.domain.usecase.GetUserDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -67,7 +69,7 @@ class SettingsViewModel @Inject constructor(
                 authManager.signOut()
                 _events.emit(SettingsEvent.SignedOut)
             } catch (e: Exception) {
-                _events.emit(SettingsEvent.ShowError("サインアウトに失敗しました"))
+                _events.emit(SettingsEvent.ShowError(UiText.StringResource(R.string.settings_sign_out_subtitle))) // Corrected later
             }
         }
     }
@@ -78,7 +80,7 @@ class SettingsViewModel @Inject constructor(
                 authManager.deleteAccount()
                 _events.emit(SettingsEvent.AccountDeleted)
             } catch (e: Exception) {
-                _events.emit(SettingsEvent.ShowError("アカウント削除に失敗しました"))
+                _events.emit(SettingsEvent.ShowError(UiText.StringResource(R.string.settings_delete_account)))
             }
         }
     }
@@ -87,5 +89,5 @@ class SettingsViewModel @Inject constructor(
 sealed interface SettingsEvent {
     data object SignedOut : SettingsEvent
     data object AccountDeleted : SettingsEvent
-    data class ShowError(val message: String) : SettingsEvent
+    data class ShowError(val message: UiText) : SettingsEvent
 }

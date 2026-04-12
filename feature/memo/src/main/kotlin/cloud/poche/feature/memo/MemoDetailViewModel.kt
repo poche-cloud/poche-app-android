@@ -4,7 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import cloud.poche.core.common.UiText
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import cloud.poche.core.domain.usecase.GetMemoByIdUseCase
 import cloud.poche.core.domain.usecase.UpdateMemoUseCase
 import cloud.poche.feature.memo.navigation.MemoDetailRoute

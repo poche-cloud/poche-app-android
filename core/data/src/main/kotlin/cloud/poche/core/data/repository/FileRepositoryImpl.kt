@@ -3,38 +3,33 @@ package cloud.poche.core.data.repository
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class FileRepositoryImpl @Inject constructor(@ApplicationContext private val context: Context) : FileRepository {
+class FileRepositoryImpl @Inject constructor(
+    @ApplicationContext private val context: Context
+) : FileRepository {
 
-    override fun createTempFile(prefix: String, extension: String): File =
-        File.createTempFile(prefix, extension, context.cacheDir)
-
-    override fun saveFile(inputStream: InputStream, fileName: String): Result<String> = try {
-        val file = File(context.filesDir, fileName)
-        FileOutputStream(file).use { output ->
-            inputStream.copyTo(output)
-        }
-        Result.success(file.absolutePath)
-    } catch (e: Exception) {
-        Result.failure(e)
+    override fun createTempFile(extension: String): File {
+        return File.createTempFile("temp", ".$extension", context.cacheDir)
     }
 
-    override fun getFile(fileName: String): File? {
+    override suspend fun saveFile(fileName: String, content: ByteArray): Result<File> = runCatching {
+        val file = File(context.filesDir, fileName)
+        file.writeBytes(content)
+        file
+    }
+
+    override suspend fun getFile(fileName: String): File? {
         val file = File(context.filesDir, fileName)
         return if (file.exists()) file else null
     }
 
-    override fun deleteFile(path: String): Boolean {
-        val file = File(path)
-        return if (file.exists()) {
-            file.delete()
-        } else {
-            false
+    override suspend fun deleteFile(fileName: String): Result<Unit> = runCatching {
+        val file = File(context.filesDir, fileName)
+        if (file.exists() && !file.delete()) {
+            throw Exception("Failed to delete file")
         }
     }
 }

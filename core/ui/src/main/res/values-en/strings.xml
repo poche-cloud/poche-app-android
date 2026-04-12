@@ -13,6 +13,18 @@
     <string name="common_delete">Delete</string>
     <string name="common_retry">Retry</string>
 
+    <!-- Aliases for features -->
+    <string name="memo_save">Save</string>
+    <string name="memo_saved">Saved successfully</string>
+    <string name="memo_edit_title">Edit Memo</string>
+    <string name="memo_detail_title">Memo Details</string>
+    <string name="memo_input_placeholder">Enter memo content…</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_load_failed">Failed to load</string>
+    <string name="error_content_empty">Please enter content</string>
+    <string name="error_save_failed">Failed to save</string>
+
     <string name="settings_section_app_settings">App Settings</string>
     <string name="settings_notification">Notifications</string>
     <string name="settings_notification_subtitle">Change push notification settings</string>
@@ -103,4 +115,9 @@
     <string name="notification_settings_title">Notification Settings</string>
     <string name="notification_settings_push">Push Notifications</string>
     <string name="notification_settings_push_description">Receive reminders and important notices</string>
+
+    <!-- Force Update -->
+    <string name="force_update_title">Update Available</string>
+    <string name="force_update_message">A new version of the app is available. Please update for the latest features and security improvements.</string>
+    <string name="force_update_button">Update Now</string>
 </resources>

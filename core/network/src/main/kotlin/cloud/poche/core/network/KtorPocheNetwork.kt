@@ -2,6 +2,7 @@ package cloud.poche.core.network
 
 import cloud.poche.core.network.model.NetworkBookmark
 import cloud.poche.core.network.model.NetworkMemo
+import cloud.poche.core.network.model.NetworkSearchResult
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.delete

@@ -7,9 +7,6 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.crypto.tink.Aead
-import com.google.crypto.tink.KeyTemplates
-import com.google.crypto.tink.aead.AeadConfig
-import com.google.crypto.tink.integration.android.AndroidKeysetManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -25,18 +22,10 @@ interface SecureStorage {
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "secure_storage")
 
 @Singleton
-class SecureStorageImpl @Inject constructor(@ApplicationContext private val context: Context) : SecureStorage {
-
-    private val aead: Aead by lazy {
-        AeadConfig.register()
-        AndroidKeysetManager.Builder()
-            .withSharedPref(context, "tink_keyset", "tink_prefs")
-            .withKeyTemplate(KeyTemplates.get("AES256_GCM"))
-            .withMasterKeyUri("android-keystore://tink_master_key")
-            .build()
-            .keysetHandle
-            .getPrimitive(Aead::class.java)
-    }
+class RealSecureStorage @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val aead: Aead
+) : SecureStorage {
 
     override suspend fun putString(key: String, value: String) {
         val encryptedValue = aead.encrypt(value.toByteArray(), null)
