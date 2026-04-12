@@ -32,12 +32,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 
 @Composable
 internal fun DataManagementScreen(
@@ -67,11 +71,11 @@ internal fun DataManagementScreen(
                 }
 
                 is DataManagementEvent.DeleteSuccess -> {
-                    snackbarHostState.showSnackbar("すべてのメモを削除しました")
+                    snackbarHostState.showSnackbar(context.getString(R.string.data_management_delete_all_snackbar_success))
                 }
 
                 is DataManagementEvent.ShowError -> {
-                    snackbarHostState.showSnackbar(event.message)
+                    snackbarHostState.showSnackbar(event.message.asString(context))
                 }
             }
         }
@@ -104,12 +108,12 @@ private fun DataManagementScreenContent(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("データ管理") },
+                title = { Text(stringResource(R.string.data_management_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },
@@ -132,14 +136,14 @@ private fun DataManagementScreenContent(
                     ) {
                         Column(modifier = Modifier.padding(16.dp)) {
                             Text(
-                                text = "ストレージ使用量",
+                                text = stringResource(R.string.data_management_storage_usage),
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text("データベース: ${Formatter.formatFileSize(context, uiState.storageUsage.databaseSizeBytes)}")
-                            Text("ファイル: ${Formatter.formatFileSize(context, uiState.storageUsage.filesSizeBytes)}")
+                            Text("${stringResource(R.string.data_management_database)}: ${Formatter.formatFileSize(context, uiState.storageUsage.databaseSizeBytes)}")
+                            Text("${stringResource(R.string.data_management_files)}: ${Formatter.formatFileSize(context, uiState.storageUsage.filesSizeBytes)}")
                             Text(
-                                text = "合計: ${Formatter.formatFileSize(context, uiState.storageUsage.totalSizeBytes)}",
+                                text = "${stringResource(R.string.data_management_total)}: ${Formatter.formatFileSize(context, uiState.storageUsage.totalSizeBytes)}",
                                 style = MaterialTheme.typography.bodyLarge,
                             )
                         }
@@ -151,7 +155,7 @@ private fun DataManagementScreenContent(
                         onClick = onExportClick,
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text("メモをエクスポート (JSON)")
+                        Text(stringResource(R.string.data_management_export_json))
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -163,7 +167,7 @@ private fun DataManagementScreenContent(
                             containerColor = MaterialTheme.colorScheme.error,
                         ),
                     ) {
-                        Text("すべてのメモを削除")
+                        Text(stringResource(R.string.data_management_delete_all))
                     }
                 }
             }
@@ -173,8 +177,8 @@ private fun DataManagementScreenContent(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("すべてのメモを削除") },
-            text = { Text("この操作は取り消せません。すべてのメモが完全に削除されます。本当に削除しますか？") },
+            title = { Text(stringResource(R.string.data_management_delete_all_dialog_title)) },
+            text = { Text(stringResource(R.string.data_management_delete_all_dialog_message)) },
             confirmButton = {
                 TextButton(
                     onClick = {
@@ -183,14 +187,14 @@ private fun DataManagementScreenContent(
                     },
                 ) {
                     Text(
-                        text = "削除",
+                        text = stringResource(R.string.common_delete),
                         color = MaterialTheme.colorScheme.error,
                     )
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showDeleteDialog = false }) {
-                    Text("キャンセル")
+                    Text(stringResource(R.string.common_cancel))
                 }
             },
         )

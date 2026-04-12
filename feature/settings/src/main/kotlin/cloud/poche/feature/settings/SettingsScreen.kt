@@ -186,44 +186,44 @@ private fun SettingsContent(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        // アプリ設定セクション
-        SettingsSectionHeader(title = "アプリ設定", isFirst = true)
+        // App settings section
+        SettingsSectionHeader(title = stringResource(R.string.settings_section_app_settings), isFirst = true)
         SettingsListTile(
             icon = Icons.Default.Notifications,
-            title = "通知",
-            subtitle = "プッシュ通知の設定を変更",
+            title = stringResource(R.string.settings_notification),
+            subtitle = stringResource(R.string.settings_notification_subtitle),
             onClick = onNavigateToNotifications,
         )
         SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.Palette,
-            title = "テーマ",
-            subtitle = "アプリの外観を変更",
+            title = stringResource(R.string.settings_theme),
+            subtitle = stringResource(R.string.settings_theme_subtitle),
             onClick = onNavigateToTheme,
         )
         SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.Language,
-            title = "言語",
-            subtitle = "表示言語を変更",
+            title = stringResource(R.string.settings_language),
+            subtitle = stringResource(R.string.settings_language_subtitle),
             onClick = onNavigateToLanguage,
         )
         SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.FlashOn,
-            title = "キャプチャ設定",
-            subtitle = "クイックキャプチャの動作を設定",
+            title = stringResource(R.string.settings_capture),
+            subtitle = stringResource(R.string.settings_capture_subtitle),
             onClick = onNavigateToCaptureSettings,
         )
         SettingsDivider()
         SettingsListTile(
             icon = Icons.Default.Storage,
-            title = "データ管理",
-            subtitle = "バックアップと同期の設定",
+            title = stringResource(R.string.settings_data_management),
+            subtitle = stringResource(R.string.settings_data_management_subtitle),
             onClick = onNavigateToDataManagement,
         )
 
-        // 法務セクション
+        // Legal section
         SettingsSectionHeader(title = stringResource(R.string.settings_section_legal))
         SettingsListTile(
             icon = Icons.Default.Description,
@@ -249,7 +249,7 @@ private fun SettingsContent(
         SettingsListTile(
             icon = Icons.Default.Language,
             title = stringResource(R.string.settings_language),
-            subtitle = "日本語 / English",
+            subtitle = stringResource(R.string.settings_language_subtitle),
             onClick = onNavigateToLanguage
         )
         SettingsDivider()
@@ -262,28 +262,28 @@ private fun SettingsContent(
         SettingsDivider()
         SettingsInfoTile(
             icon = Icons.Default.Info,
-            title = "バージョン",
+            title = stringResource(R.string.settings_version),
             subtitle = uiState.appVersion,
         )
 
-        // 開発者ツールセクション (debug ビルドのみ)
+        // Developer tools section (debug build only)
         if (uiState.isDebugBuild) {
-            SettingsSectionHeader(title = "開発者")
+            SettingsSectionHeader(title = stringResource(R.string.settings_section_developer))
             SettingsListTile(
                 icon = Icons.Default.DeveloperMode,
-                title = "開発者ツール",
-                subtitle = "環境情報、機能フラグ、キャッシュ操作",
+                title = stringResource(R.string.settings_devtools),
+                subtitle = stringResource(R.string.settings_devtools_subtitle),
                 onClick = onNavigateToDevTools,
             )
         }
 
-        // アカウントセクション
+        // Account section
         if (uiState.isSignedIn) {
-            SettingsSectionHeader(title = "アカウント")
+            SettingsSectionHeader(title = stringResource(R.string.settings_section_account))
             SettingsListTile(
                 icon = Icons.AutoMirrored.Filled.Logout,
-                title = "サインアウト",
-                subtitle = "アカウントからサインアウト",
+                title = stringResource(R.string.settings_sign_out),
+                subtitle = stringResource(R.string.settings_sign_out_subtitle),
                 onClick = { showSignOutDialog = true },
                 isDestructive = true,
             )
@@ -291,7 +291,7 @@ private fun SettingsContent(
             SettingsListTile(
                 icon = Icons.Default.DeleteForever,
                 title = stringResource(id = cloud.poche.core.ui.R.string.settings_delete_account),
-                subtitle = "アカウントとデータを完全に削除",
+                subtitle = stringResource(R.string.settings_delete_account_subtitle),
                 onClick = { showDeleteAccountDialog = true },
                 isDestructive = true,
             )
@@ -302,9 +302,9 @@ private fun SettingsContent(
 
     if (showSignOutDialog) {
         ConfirmDialog(
-            title = "サインアウト",
-            message = "サインアウトしますか？",
-            confirmText = "サインアウト",
+            title = stringResource(R.string.settings_dialog_sign_out_title),
+            message = stringResource(R.string.settings_dialog_sign_out_message),
+            confirmText = stringResource(R.string.settings_dialog_sign_out_confirm),
             onConfirm = {
                 showSignOutDialog = false
                 onSignOutClick()
@@ -316,8 +316,8 @@ private fun SettingsContent(
     if (showDeleteAccountDialog) {
         ConfirmDialog(
             title = stringResource(id = cloud.poche.core.ui.R.string.settings_delete_account),
-            message = "この操作は取り消せません。アカウントとすべてのデータが完全に削除されます。本当に削除しますか？",
-            confirmText = "削除",
+            message = stringResource(R.string.settings_dialog_delete_account_message),
+            confirmText = stringResource(R.string.settings_dialog_delete_account_confirm),
             onConfirm = {
                 showDeleteAccountDialog = false
                 onDeleteAccountClick()
@@ -460,7 +460,7 @@ private fun ConfirmDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("キャンセル")
+                Text(stringResource(R.string.common_cancel))
             }
         },
     )

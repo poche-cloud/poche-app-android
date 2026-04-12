@@ -28,11 +28,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cloud.poche.core.model.DarkThemeConfig
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun ThemeSettingsScreen(
@@ -62,12 +64,12 @@ internal fun ThemeSettingsScreen(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("テーマ選択") },
+                title = { Text(stringResource(R.string.theme_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },
@@ -86,24 +88,24 @@ internal fun ThemeSettingsScreen(
                 ) {
                     ThemeRadioTile(
                         icon = Icons.Default.SettingsSuggest,
-                        title = "システム設定に従う",
-                        subtitle = "デバイスのテーマ設定を使用します",
+                        title = stringResource(R.string.theme_settings_system),
+                        subtitle = stringResource(R.string.theme_settings_system_description),
                         selected = uiState.darkThemeConfig == DarkThemeConfig.FOLLOW_SYSTEM,
                         onClick = { onThemeSelected(DarkThemeConfig.FOLLOW_SYSTEM) },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ThemeRadioTile(
                         icon = Icons.Default.LightMode,
-                        title = "ライト",
-                        subtitle = "常にライトテーマを使用します",
+                        title = stringResource(R.string.theme_settings_light),
+                        subtitle = stringResource(R.string.theme_settings_light_description),
                         selected = uiState.darkThemeConfig == DarkThemeConfig.LIGHT,
                         onClick = { onThemeSelected(DarkThemeConfig.LIGHT) },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     ThemeRadioTile(
                         icon = Icons.Default.DarkMode,
-                        title = "ダーク",
-                        subtitle = "常にダークテーマを使用します",
+                        title = stringResource(R.string.theme_settings_dark),
+                        subtitle = stringResource(R.string.theme_settings_dark_description),
                         selected = uiState.darkThemeConfig == DarkThemeConfig.DARK,
                         onClick = { onThemeSelected(DarkThemeConfig.DARK) },
                     )

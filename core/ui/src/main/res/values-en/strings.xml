@@ -24,6 +24,8 @@
     <string name="error_load_failed">Failed to load</string>
     <string name="error_content_empty">Please enter content</string>
     <string name="error_save_failed">Failed to save</string>
+    <string name="error_delete_failed">Failed to delete</string>
+    <string name="error_unknown">Unknown error</string>
 
     <string name="settings_section_app_settings">App Settings</string>
     <string name="settings_notification">Notifications</string>
@@ -57,6 +59,14 @@
 
     <string name="home_empty_title">No memos yet</string>
     <string name="home_empty_description">Add a memo from the bar below</string>
+    <string name="home_quick_capture_plus">Add</string>
+    <string name="home_quick_capture_submit">Put in pocket</string>
+    <string name="home_capture_option_text">Multi-line Memo</string>
+    <string name="home_capture_option_text_desc">Write a long memo</string>
+    <string name="home_capture_option_photo">Photo</string>
+    <string name="home_capture_option_photo_desc">Take a photo and save</string>
+    <string name="home_capture_option_voice">Voice Memo</string>
+    <string name="home_capture_option_voice_desc">Record audio</string>
 
     <string name="capture_error_empty_input">Please enter content</string>
     <string name="capture_error_save_failed">Failed to save</string>
@@ -112,6 +122,32 @@
     <string name="oss_licenses_title">Open Source Licenses</string>
 
     <string name="capture_settings_title">Capture Settings</string>
+    <string name="capture_settings_default_type">Default Capture Type</string>
+    <string name="capture_settings_type_selection">Show selection screen</string>
+    <string name="capture_settings_type_selection_desc">Select type every time</string>
+    <string name="capture_settings_type_text">Text memo</string>
+    <string name="capture_settings_type_text_desc">Open text input directly</string>
+    <string name="capture_settings_type_photo">Photo</string>
+    <string name="capture_settings_type_photo_desc">Open camera directly</string>
+    <string name="capture_settings_type_voice">Voice memo</string>
+    <string name="capture_settings_type_voice_desc">Open recording screen directly</string>
+
+    <string name="capture_title_text">Memo</string>
+    <string name="capture_title_photo">Photo</string>
+    <string name="capture_title_voice">Voice Memo</string>
+    <string name="capture_input_placeholder">Enter memo content…</string>
+    <string name="capture_photo_take">Take Photo</string>
+    <string name="capture_photo_pick">Choose from Gallery</string>
+    <string name="capture_photo_retake">Retake</string>
+    <string name="capture_caption_placeholder">Add a caption…</string>
+    <string name="capture_voice_ready">Tap to start recording</string>
+    <string name="capture_voice_recording">Recording…</string>
+    <string name="capture_voice_retake">Retake</string>
+    <string name="capture_voice_play">Play</string>
+    <string name="capture_voice_pause">Pause</string>
+    <string name="capture_voice_stop">Stop</string>
+    <string name="capture_voice_start">Start Recording</string>
+
     <string name="notification_settings_title">Notification Settings</string>
     <string name="notification_settings_push">Push Notifications</string>
     <string name="notification_settings_push_description">Receive reminders and important notices</string>

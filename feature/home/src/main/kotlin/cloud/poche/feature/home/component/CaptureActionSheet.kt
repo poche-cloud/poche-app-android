@@ -18,8 +18,10 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cloud.poche.core.model.MemoType
+import cloud.poche.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -34,20 +36,20 @@ internal fun CaptureActionSheet(onDismiss: () -> Unit, onSelected: (MemoType) ->
         Column {
             CaptureOptionItem(
                 icon = Icons.Default.NoteAlt,
-                title = "複数行メモ",
-                subtitle = "長文のメモを書く",
+                title = stringResource(R.string.home_capture_option_text),
+                subtitle = stringResource(R.string.home_capture_option_text_desc),
                 onClick = { onSelected(MemoType.TEXT) },
             )
             CaptureOptionItem(
                 icon = Icons.Default.CameraAlt,
-                title = "写真",
-                subtitle = "写真を撮影して保存",
+                title = stringResource(R.string.home_capture_option_photo),
+                subtitle = stringResource(R.string.home_capture_option_photo_desc),
                 onClick = { onSelected(MemoType.PHOTO) },
             )
             CaptureOptionItem(
                 icon = Icons.Default.Mic,
-                title = "音声メモ",
-                subtitle = "音声を録音",
+                title = stringResource(R.string.home_capture_option_voice),
+                subtitle = stringResource(R.string.home_capture_option_voice_desc),
                 onClick = { onSelected(MemoType.VOICE) },
             )
             Spacer(modifier = Modifier.height(8.dp))

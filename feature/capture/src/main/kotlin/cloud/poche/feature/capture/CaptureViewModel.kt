@@ -12,6 +12,8 @@ import cloud.poche.core.domain.usecase.SavePhotoMemoUseCase
 import cloud.poche.core.domain.usecase.SaveVoiceMemoUseCase
 import cloud.poche.core.model.Memo
 import cloud.poche.core.model.MemoType
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -42,7 +44,7 @@ internal class CaptureViewModel @Inject constructor(
     fun saveMemo(content: String) {
         if (content.isBlank()) {
             viewModelScope.launch {
-                _events.emit(CaptureEvent.ShowError("内容を入力してください"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_empty_input)))
             }
             return
         }
@@ -59,7 +61,7 @@ internal class CaptureViewModel @Inject constructor(
                 saveMemoUseCase(memo)
                 _events.emit(CaptureEvent.SaveSuccess)
             } catch (e: Exception) {
-                _events.emit(CaptureEvent.ShowError("保存に失敗しました"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_save_failed)))
             } finally {
                 _isSaving.value = false
             }
@@ -90,7 +92,7 @@ internal class CaptureViewModel @Inject constructor(
                 _events.emit(CaptureEvent.SaveSuccess)
             } catch (e: Exception) {
                 _photoUiState.value = PhotoCaptureUiState.Preview(uri)
-                _events.emit(CaptureEvent.ShowError("保存に失敗しました"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_save_failed)))
             }
         }
     }
@@ -146,7 +148,7 @@ internal class CaptureViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                _events.emit(CaptureEvent.ShowError("録音の開始に失敗しました"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_audio_start_failed)))
                 _voiceUiState.value = VoiceCaptureUiState.Ready
             }
         }
@@ -176,7 +178,7 @@ internal class CaptureViewModel @Inject constructor(
         } else {
             _voiceUiState.value = VoiceCaptureUiState.Ready
             viewModelScope.launch {
-                _events.emit(CaptureEvent.ShowError("録音に失敗しました"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_audio_failed)))
             }
         }
     }
@@ -215,7 +217,7 @@ internal class CaptureViewModel @Inject constructor(
                     )
                 }
             } catch (e: Exception) {
-                _events.emit(CaptureEvent.ShowError("再生に失敗しました"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_playback_failed)))
             }
         }
     }
@@ -257,7 +259,7 @@ internal class CaptureViewModel @Inject constructor(
                     filePath = filePath,
                     durationMs = durationMs,
                 )
-                _events.emit(CaptureEvent.ShowError("保存に失敗しました"))
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_save_failed)))
             }
         }
     }
@@ -274,7 +276,7 @@ internal class CaptureViewModel @Inject constructor(
 
 internal sealed interface CaptureEvent {
     data object SaveSuccess : CaptureEvent
-    data class ShowError(val message: String) : CaptureEvent
+    data class ShowError(val message: UiText) : CaptureEvent
 }
 
 internal sealed interface PhotoCaptureUiState {

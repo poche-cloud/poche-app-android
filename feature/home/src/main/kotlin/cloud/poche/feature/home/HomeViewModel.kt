@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cloud.poche.core.common.result.Result
 import cloud.poche.core.common.result.asResult
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import cloud.poche.core.domain.usecase.DeleteMemoUseCase
 import cloud.poche.core.domain.usecase.GetMemosUseCase
 import cloud.poche.core.domain.usecase.SaveMemoUseCase
@@ -48,7 +50,8 @@ class HomeViewModel @Inject constructor(
                             is Result.Success -> HomeUiState.Success(memos = result.data)
 
                             is Result.Error -> HomeUiState.Error(
-                                message = result.exception.message ?: "不明なエラー",
+                                message = result.exception.message?.let { UiText.DynamicString(it) }
+                                    ?: UiText.StringResource(R.string.error_unknown),
                             )
                         }
                     }
@@ -68,7 +71,7 @@ class HomeViewModel @Inject constructor(
             try {
                 deleteMemoUseCase(id)
             } catch (e: Exception) {
-                _events.emit(HomeEvent.ShowError("削除に失敗しました"))
+                _events.emit(HomeEvent.ShowError(UiText.StringResource(R.string.error_delete_failed)))
             }
         }
     }
@@ -87,7 +90,7 @@ class HomeViewModel @Inject constructor(
                 saveMemoUseCase(memo)
                 _events.emit(HomeEvent.CaptureSuccess)
             } catch (e: Exception) {
-                _events.emit(HomeEvent.ShowError("保存に失敗しました"))
+                _events.emit(HomeEvent.ShowError(UiText.StringResource(R.string.error_save_failed)))
             }
         }
     }
@@ -95,5 +98,5 @@ class HomeViewModel @Inject constructor(
 
 sealed interface HomeEvent {
     data object CaptureSuccess : HomeEvent
-    data class ShowError(val message: String) : HomeEvent
+    data class ShowError(val message: UiText) : HomeEvent
 }

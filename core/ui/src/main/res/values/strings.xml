@@ -24,6 +24,8 @@
     <string name="error_load_failed">読み込みに失敗しました</string>
     <string name="error_content_empty">内容を入力してください</string>
     <string name="error_save_failed">保存に失敗しました</string>
+    <string name="error_delete_failed">削除に失敗しました</string>
+    <string name="error_unknown">不明なエラー</string>
 
     <string name="settings_section_app_settings">アプリ設定</string>
     <string name="settings_notification">通知</string>
@@ -57,6 +59,14 @@
 
     <string name="home_empty_title">メモがありません</string>
     <string name="home_empty_description">下のバーからメモを追加しましょう</string>
+    <string name="home_quick_capture_plus">追加</string>
+    <string name="home_quick_capture_submit">ポケットに入れる</string>
+    <string name="home_capture_option_text">複数行メモ</string>
+    <string name="home_capture_option_text_desc">長文のメモを書く</string>
+    <string name="home_capture_option_photo">写真</string>
+    <string name="home_capture_option_photo_desc">写真を撮影して保存</string>
+    <string name="home_capture_option_voice">音声メモ</string>
+    <string name="home_capture_option_voice_desc">音声を録音</string>
 
     <string name="capture_error_empty_input">内容を入力してください</string>
     <string name="capture_error_save_failed">保存に失敗しました</string>
@@ -112,6 +122,32 @@
     <string name="oss_licenses_title">オープンソースライセンス</string>
 
     <string name="capture_settings_title">キャプチャ設定</string>
+    <string name="capture_settings_default_type">デフォルトのキャプチャタイプ</string>
+    <string name="capture_settings_type_selection">選択画面を表示</string>
+    <string name="capture_settings_type_selection_desc">毎回タイプを選択する</string>
+    <string name="capture_settings_type_text">テキストメモ</string>
+    <string name="capture_settings_type_text_desc">テキスト入力画面を直接開く</string>
+    <string name="capture_settings_type_photo">写真</string>
+    <string name="capture_settings_type_photo_desc">カメラを直接開く</string>
+    <string name="capture_settings_type_voice">音声メモ</string>
+    <string name="capture_settings_type_voice_desc">録音画面を直接開く</string>
+
+    <string name="capture_title_text">メモ</string>
+    <string name="capture_title_photo">写真</string>
+    <string name="capture_title_voice">音声メモ</string>
+    <string name="capture_input_placeholder">メモを入力…</string>
+    <string name="capture_photo_take">カメラで撮影</string>
+    <string name="capture_photo_pick">ギャラリーから選択</string>
+    <string name="capture_photo_retake">撮り直す</string>
+    <string name="capture_caption_placeholder">キャプションを追加…</string>
+    <string name="capture_voice_ready">タップして録音を開始</string>
+    <string name="capture_voice_recording">録音中…</string>
+    <string name="capture_voice_retake">録り直す</string>
+    <string name="capture_voice_play">再生</string>
+    <string name="capture_voice_pause">一時停止</string>
+    <string name="capture_voice_stop">停止</string>
+    <string name="capture_voice_start">録音開始</string>
+
     <string name="notification_settings_title">通知設定</string>
     <string name="notification_settings_push">プッシュ通知</string>
     <string name="notification_settings_push_description">新しいメモのリマインダーや重要なお知らせを受け取る</string>
