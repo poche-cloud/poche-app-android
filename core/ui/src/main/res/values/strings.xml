@@ -9,4 +9,98 @@
     <string name="onboarding_description">あなたのパーソナルナレッジベース</string>
     <string name="common_save">保存</string>
     <string name="common_cancel">キャンセル</string>
+    <string name="common_back">戻る</string>
+    <string name="common_delete">削除</string>
+    <string name="common_retry">再試行</string>
+
+    <string name="settings_section_app_settings">アプリ設定</string>
+    <string name="settings_notification">通知</string>
+    <string name="settings_notification_subtitle">プッシュ通知の設定を変更</string>
+    <string name="settings_theme">テーマ</string>
+    <string name="settings_theme_subtitle">アプリの外観を変更</string>
+    <string name="settings_language_subtitle">表示言語を変更</string>
+    <string name="settings_capture">キャプチャ設定</string>
+    <string name="settings_capture_subtitle">クイックキャプチャの動作を設定</string>
+    <string name="settings_data_management">データ管理</string>
+    <string name="settings_data_management_subtitle">バックアップと同期の設定</string>
+    <string name="settings_section_legal">法務</string>
+    <string name="settings_terms_of_service">利用規約</string>
+    <string name="settings_terms_of_service_subtitle">サービスの利用規約を確認</string>
+    <string name="settings_privacy_policy">プライバシーポリシー</string>
+    <string name="settings_privacy_policy_subtitle">個人情報の取り扱いを確認</string>
+    <string name="settings_oss_licenses">オープンソースライセンス</string>
+    <string name="settings_oss_licenses_subtitle">使用しているオープンソースソフトウェア</string>
+    <string name="settings_version">バージョン</string>
+    <string name="settings_section_developer">開発者</string>
+    <string name="settings_devtools">開発者ツール</string>
+    <string name="settings_devtools_subtitle">環境情報、機能フラグ、キャッシュ操作</string>
+    <string name="settings_section_account">アカウント</string>
+    <string name="settings_sign_out_subtitle">アカウントからサインアウト</string>
+    <string name="settings_delete_account_subtitle">アカウントとデータを完全に削除</string>
+    <string name="settings_dialog_sign_out_title">サインアウト</string>
+    <string name="settings_dialog_sign_out_message">サインアウトしますか？</string>
+    <string name="settings_dialog_sign_out_confirm">サインアウト</string>
+    <string name="settings_dialog_delete_account_message">この操作は取り消せません。アカウントとすべてのデータが完全に削除されます。本当に削除しますか？</string>
+    <string name="settings_dialog_delete_account_confirm">削除</string>
+
+    <string name="home_empty_title">メモがありません</string>
+    <string name="home_empty_description">下のバーからメモを追加しましょう</string>
+
+    <string name="capture_error_empty_input">内容を入力してください</string>
+    <string name="capture_error_save_failed">保存に失敗しました</string>
+    <string name="capture_error_audio_start_failed">録音の開始に失敗しました</string>
+    <string name="capture_error_audio_failed">録音に失敗しました</string>
+    <string name="capture_error_playback_failed">再生に失敗しました</string>
+
+    <string name="data_management_title">データ管理</string>
+    <string name="data_management_storage_usage">ストレージ使用量</string>
+    <string name="data_management_database">データベース</string>
+    <string name="data_management_files">ファイル</string>
+    <string name="data_management_total">合計</string>
+    <string name="data_management_export_json">メモをエクスポート (JSON)</string>
+    <string name="data_management_delete_all">すべてのメモを削除</string>
+    <string name="data_management_delete_all_dialog_title">すべてのメモを削除</string>
+    <string name="data_management_delete_all_dialog_message">この操作は取り消せません。すべてのメモが完全に削除されます。本当に削除しますか？</string>
+    <string name="data_management_delete_all_snackbar_success">すべてのメモを削除しました</string>
+    <string name="data_management_error_export_failed">エクスポートに失敗しました</string>
+    <string name="data_management_error_delete_failed">削除に失敗しました</string>
+
+    <string name="language_settings_title">言語選択</string>
+    <string name="language_settings_ja">日本語</string>
+    <string name="language_settings_en">英語</string>
+
+    <string name="theme_settings_title">テーマ選択</string>
+    <string name="theme_settings_system">システム設定に従う</string>
+    <string name="theme_settings_system_description">デバイスのテーマ設定を使用します</string>
+    <string name="theme_settings_light">ライト</string>
+    <string name="theme_settings_light_description">常にライトテーマを使用します</string>
+    <string name="theme_settings_dark">ダーク</string>
+    <string name="theme_settings_dark_description">常にダークテーマを使用します</string>
+
+    <string name="devtools_title">開発者ツール</string>
+    <string name="devtools_cache_clear_success">キャッシュをクリアしました</string>
+    <string name="devtools_cache_clear_failed">キャッシュのクリアに失敗しました</string>
+
+    <string name="feature_flags_title">機能フラグ</string>
+    <string name="feature_flags_empty">機能フラグが設定されていません</string>
+    <string name="feature_flags_enabled">有効</string>
+    <string name="feature_flags_disabled">無効</string>
+
+    <string name="environment_info_title">環境情報</string>
+    <string name="environment_info_app_version">アプリバージョン</string>
+    <string name="environment_info_build_number">ビルド番号</string>
+    <string name="environment_info_package_name">パッケージ名</string>
+    <string name="environment_info_build_type">ビルドタイプ</string>
+    <string name="environment_info_flavor">フレーバー</string>
+
+    <string name="cache_actions_title">キャッシュ操作</string>
+    <string name="cache_actions_clear_all">全キャッシュをクリア</string>
+    <string name="cache_actions_clear_all_description">アプリのキャッシュデータをすべて削除します</string>
+
+    <string name="oss_licenses_title">オープンソースライセンス</string>
+
+    <string name="capture_settings_title">キャプチャ設定</string>
+    <string name="notification_settings_title">通知設定</string>
+    <string name="notification_settings_push">プッシュ通知</string>
+    <string name="notification_settings_push_description">新しいメモのリマインダーや重要なお知らせを受け取る</string>
 </resources>

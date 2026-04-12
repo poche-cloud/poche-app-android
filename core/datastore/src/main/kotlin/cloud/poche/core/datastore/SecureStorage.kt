@@ -25,9 +25,7 @@ interface SecureStorage {
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "secure_storage")
 
 @Singleton
-class SecureStorageImpl @Inject constructor(
-    @ApplicationContext private val context: Context
-) : SecureStorage {
+class SecureStorageImpl @Inject constructor(@ApplicationContext private val context: Context) : SecureStorage {
 
     private val aead: Aead by lazy {
         AeadConfig.register()

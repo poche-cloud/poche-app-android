@@ -11,7 +11,5 @@ import javax.inject.Singleton
 abstract class SecureStorageModule {
     @Binds
     @Singleton
-    abstract fun bindSecureStorage(
-        secureStorageImpl: SecureStorageImpl
-    ): SecureStorage
+    abstract fun bindSecureStorage(secureStorageImpl: SecureStorageImpl): SecureStorage
 }
