@@ -83,7 +83,6 @@ jobs:
     needs: build-release
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    if: false # TODO: Secrets 設定後に有効化
 
     environment:
       name: production
