@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="force_update_title">アップデートが必要です</string>
-    <string name="force_update_message">最新バージョンへのアップデートが必要です。ストアからアップデートしてください。</string>
-    <string name="force_update_button">ストアを開く</string>
+    <string name="app_name">Poche</string>
+    <string name="settings_title">設定</string>
+    <string name="settings_language">言語</string>
+    <string name="settings_sign_out">ログアウト</string>
+    <string name="settings_delete_account">アカウント削除</string>
+    <string name="onboarding_title">Poche へようこそ</string>
+    <string name="onboarding_description">あなたのパーソナルナレッジベース</string>
+    <string name="common_save">保存</string>
+    <string name="common_cancel">キャンセル</string>
 </resources>

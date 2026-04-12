@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="force_update_title">Update required</string>
-    <string name="force_update_message">Please update to the latest version from the store.</string>
-    <string name="force_update_button">Open Store</string>
+    <string name="app_name">Poche</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_sign_out">Sign Out</string>
+    <string name="settings_delete_account">Delete Account</string>
+    <string name="onboarding_title">Welcome to Poche</string>
+    <string name="onboarding_description">Your personal knowledge base</string>
+    <string name="common_save">Save</string>
+    <string name="common_cancel">Cancel</string>
 </resources>
