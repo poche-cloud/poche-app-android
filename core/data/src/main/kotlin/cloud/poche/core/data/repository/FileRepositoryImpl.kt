@@ -36,14 +36,22 @@ class FileRepositoryImpl @Inject constructor(@ApplicationContext private val con
         }
     }
 
-    override suspend fun getFile(name: String): File? {
+    override suspend fun getFile(name: String): Result<File> {
         val file = File(filesDir, name)
-        return if (file.exists()) file else null
+        return if (file.exists()) {
+            Result.success(file)
+        } else {
+            Result.failure(Exception("File not found"))
+        }
     }
 
-    override suspend fun deleteFile(name: String): Boolean {
+    override suspend fun deleteFile(name: String): Result<Unit> {
         val file = File(filesDir, name)
-        return if (file.exists()) file.delete() else false
+        return if (file.exists() && file.delete()) {
+            Result.success(Unit)
+        } else {
+            Result.failure(Exception("Failed to delete file"))
+        }
     }
 
     override suspend fun createTempFile(prefix: String, suffix: String): File =

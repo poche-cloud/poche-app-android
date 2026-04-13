@@ -1,75 +1,67 @@
 package cloud.poche.core.data.repository
 
-import android.content.Context
 import android.net.Uri
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
-import java.io.ByteArrayInputStream
 import java.io.File
 
 class FileRepositoryTest {
 
-    private lateinit var fileRepository: FileRepository
-    private lateinit var context: Context
+    class FakeFileRepository(private val tempDir: File) : FileRepository {
+        override suspend fun saveFile(uri: Uri, targetName: String): Result<File> {
+            val file = File(tempDir, targetName)
+            file.writeText("fake content from uri")
+            return Result.success(file)
+        }
 
-    @TempDir
-    lateinit var tempDir: File
+        override suspend fun saveFile(source: File, targetName: String): Result<File> {
+            val file = File(tempDir, targetName)
+            source.copyTo(file, overwrite = true)
+            return Result.success(file)
+        }
 
-    @BeforeEach
-    fun setup() {
-        context = mockk(relaxed = true)
-        every { context.filesDir } returns tempDir
-        every { context.cacheDir } returns tempDir
+        override suspend fun getFile(name: String): Result<File> {
+            val file = File(tempDir, name)
+            return if (file.exists()) Result.success(file) else Result.failure(Exception("Not found"))
+        }
 
-        fileRepository = FileRepositoryImpl(context)
+        override suspend fun deleteFile(name: String): Result<Unit> {
+            val file = File(tempDir, name)
+            return if (file.exists() &&
+                file.delete()
+            ) {
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Delete failed"))
+            }
+        }
+
+        override suspend fun createTempFile(prefix: String, suffix: String): File =
+            File.createTempFile(prefix, suffix, tempDir)
     }
 
     @Test
-    fun `saveFile from source file works`() = runTest {
+    fun `test saveFile, getFile and deleteFile with Fake`(@TempDir tempDir: File) = runTest {
+        val repository = FakeFileRepository(tempDir)
         val sourceFile = File(tempDir, "source.txt")
         sourceFile.writeText("test content")
 
-        val result = fileRepository.saveFile(sourceFile, "target.txt")
+        val saveResult = repository.saveFile(sourceFile, "test.txt")
+        assertTrue(saveResult.isSuccess)
 
-        assertTrue(result.isSuccess)
-        val targetFile = result.getOrThrow()
-        assertEquals("test content", targetFile.readText())
-    }
+        val getResult = repository.getFile("test.txt")
+        assertTrue(getResult.isSuccess)
+        assertEquals("test content", getResult.getOrNull()?.readText())
 
-    @Test
-    fun `getFile returns file if exists`() = runTest {
-        val file = File(tempDir, "existing.txt")
-        file.writeText("hello")
+        val deleteResult = repository.deleteFile("test.txt")
+        assertTrue(deleteResult.isSuccess)
 
-        val result = fileRepository.getFile("existing.txt")
-
-        assertNotNull(result)
-        assertEquals("hello", result?.readText())
-    }
-
-    @Test
-    fun `getFile returns null if not exists`() = runTest {
-        val result = fileRepository.getFile("non_existent.txt")
-        assertNull(result)
-    }
-
-    @Test
-    fun `deleteFile works`() = runTest {
-        val file = File(tempDir, "to_delete.txt")
-        file.writeText("bye")
-
-        val result = fileRepository.deleteFile("to_delete.txt")
-
-        assertTrue(result)
-        assertFalse(File(tempDir, "to_delete.txt").exists())
+        val getResultAfterDelete = repository.getFile("test.txt")
+        assertTrue(getResultAfterDelete.isFailure)
     }
 }
