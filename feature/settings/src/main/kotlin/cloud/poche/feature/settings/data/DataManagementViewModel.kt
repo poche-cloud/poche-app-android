@@ -3,12 +3,12 @@ package cloud.poche.feature.settings.data
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cloud.poche.core.ui.R
-import cloud.poche.core.ui.UiText
 import cloud.poche.core.domain.usecase.DeleteAllMemosUseCase
 import cloud.poche.core.domain.usecase.ExportMemosUseCase
 import cloud.poche.core.domain.usecase.GetStorageUsageUseCase
 import cloud.poche.core.model.StorageUsage
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -52,7 +52,9 @@ internal class DataManagementViewModel @Inject constructor(
                 file.writeText(json)
                 _events.emit(DataManagementEvent.ExportSuccess(file))
             } catch (_: Exception) {
-                _events.emit(DataManagementEvent.ShowError(UiText.StringResource(R.string.data_management_error_export_failed)))
+                _events.emit(
+                    DataManagementEvent.ShowError(UiText.StringResource(R.string.data_management_error_export_failed)),
+                )
             }
         }
     }
@@ -64,7 +66,9 @@ internal class DataManagementViewModel @Inject constructor(
                 loadStorageUsage()
                 _events.emit(DataManagementEvent.DeleteSuccess)
             } catch (_: Exception) {
-                _events.emit(DataManagementEvent.ShowError(UiText.StringResource(R.string.data_management_error_delete_failed)))
+                _events.emit(
+                    DataManagementEvent.ShowError(UiText.StringResource(R.string.data_management_error_delete_failed)),
+                )
             }
         }
     }

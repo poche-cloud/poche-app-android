@@ -4,15 +4,16 @@ import cloud.poche.core.database.dao.MemoDao
 import cloud.poche.core.database.entity.MemoEntity
 import cloud.poche.core.model.Memo
 import cloud.poche.core.model.MemoType
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
 
 class OfflineFirstMemoRepositoryTest {
 
@@ -21,7 +22,7 @@ class OfflineFirstMemoRepositoryTest {
 
     @BeforeEach
     fun setUp() {
-        memoDao = mock()
+        memoDao = mockk(relaxed = true)
         repository = OfflineFirstMemoRepository(memoDao)
     }
 
@@ -31,7 +32,7 @@ class OfflineFirstMemoRepositoryTest {
             MemoEntity("1", "Content 1", "TEXT", 1000L, 1000L),
             MemoEntity("2", "Content 2", "PHOTO", 2000L, 2000L),
         )
-        whenever(memoDao.getMemos()).thenReturn(flowOf(entities))
+        every { memoDao.getMemos() } returns flowOf(entities)
 
         val result = repository.getMemos().first()
 
@@ -48,9 +49,11 @@ class OfflineFirstMemoRepositoryTest {
 
         repository.createMemo(memo)
 
-        verify(memoDao).insertMemo(
-            MemoEntity("1", "Content", "TEXT", 1000L, 1000L),
-        )
+        coVerify {
+            memoDao.insertMemo(
+                MemoEntity("1", "Content", "TEXT", 1000L, 1000L),
+            )
+        }
     }
 
     @Test
@@ -58,7 +61,7 @@ class OfflineFirstMemoRepositoryTest {
         val entities = listOf(
             MemoEntity("1", "Pending", "TEXT", 1000L, 1000L, pendingSync = true),
         )
-        whenever(memoDao.getPendingSyncMemos()).thenReturn(entities)
+        coEvery { memoDao.getPendingSyncMemos() } returns entities
 
         val result = repository.getPendingSyncMemos()
 

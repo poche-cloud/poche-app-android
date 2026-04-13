@@ -36,13 +36,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.model.MemoType
+import cloud.poche.core.ui.AudioPlayer
 import cloud.poche.core.ui.R
 import cloud.poche.core.ui.UiText
+import coil3.compose.AsyncImage
 
 @Composable
 internal fun MemoDetailScreen(
@@ -178,6 +182,25 @@ private fun MemoDetailScreenContent(
                             .verticalScroll(rememberScrollState())
                             .padding(16.dp),
                     ) {
+                        if (uiState.memo.type == MemoType.PHOTO && uiState.memo.filePath != null) {
+                            AsyncImage(
+                                model = uiState.memo.filePath,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(300.dp)
+                                    .padding(bottom = 16.dp),
+                                contentScale = ContentScale.Crop,
+                            )
+                        }
+
+                        if (uiState.memo.type == MemoType.VOICE && uiState.memo.filePath != null) {
+                            AudioPlayer(
+                                filePath = uiState.memo.filePath!!,
+                                modifier = Modifier.padding(bottom = 16.dp),
+                            )
+                        }
+
                         Text(
                             text = uiState.memo.content,
                             style = MaterialTheme.typography.bodyLarge,

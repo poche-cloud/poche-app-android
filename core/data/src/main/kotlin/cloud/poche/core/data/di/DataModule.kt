@@ -10,16 +10,23 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataModule {
-    @Binds
-    abstract fun bindMemoRepository(impl: OfflineFirstMemoRepository): MemoRepository
 
     @Binds
-    abstract fun bindUserDataRepository(impl: OfflineFirstUserDataRepository): UserDataRepository
+    @Singleton
+    abstract fun bindFileRepository(fileRepositoryImpl: FileRepositoryImpl): FileRepository
 
     @Binds
-    abstract fun bindFileRepository(impl: FileRepositoryImpl): FileRepository
+    @Singleton
+    abstract fun bindMemoRepository(offlineFirstMemoRepository: OfflineFirstMemoRepository): MemoRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserDataRepository(
+        offlineFirstUserDataRepository: OfflineFirstUserDataRepository,
+    ): UserDataRepository
 }

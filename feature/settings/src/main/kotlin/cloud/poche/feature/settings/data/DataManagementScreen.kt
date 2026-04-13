@@ -71,7 +71,9 @@ internal fun DataManagementScreen(
                 }
 
                 is DataManagementEvent.DeleteSuccess -> {
-                    snackbarHostState.showSnackbar(context.getString(R.string.data_management_delete_all_snackbar_success))
+                    snackbarHostState.showSnackbar(
+                        context.getString(R.string.data_management_delete_all_snackbar_success),
+                    )
                 }
 
                 is DataManagementEvent.ShowError -> {
@@ -140,10 +142,20 @@ private fun DataManagementScreenContent(
                                 style = MaterialTheme.typography.titleMedium,
                             )
                             Spacer(modifier = Modifier.height(8.dp))
-                            Text("${stringResource(R.string.data_management_database)}: ${Formatter.formatFileSize(context, uiState.storageUsage.databaseSizeBytes)}")
-                            Text("${stringResource(R.string.data_management_files)}: ${Formatter.formatFileSize(context, uiState.storageUsage.filesSizeBytes)}")
                             Text(
-                                text = "${stringResource(R.string.data_management_total)}: ${Formatter.formatFileSize(context, uiState.storageUsage.totalSizeBytes)}",
+                                "${stringResource(
+                                    R.string.data_management_database,
+                                )}: ${Formatter.formatFileSize(context, uiState.storageUsage.databaseSizeBytes)}",
+                            )
+                            Text(
+                                "${stringResource(
+                                    R.string.data_management_files,
+                                )}: ${Formatter.formatFileSize(context, uiState.storageUsage.filesSizeBytes)}",
+                            )
+                            Text(
+                                text = "${stringResource(
+                                    R.string.data_management_total,
+                                )}: ${Formatter.formatFileSize(context, uiState.storageUsage.totalSizeBytes)}",
                                 style = MaterialTheme.typography.bodyLarge,
                             )
                         }

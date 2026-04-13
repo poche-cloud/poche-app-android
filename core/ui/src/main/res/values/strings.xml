@@ -44,6 +44,8 @@
     <string name="settings_privacy_policy_subtitle">個人情報の取り扱いを確認</string>
     <string name="settings_oss_licenses">オープンソースライセンス</string>
     <string name="settings_oss_licenses_subtitle">使用しているオープンソースソフトウェア</string>
+    <string name="settings_ai_consent">AI分析への同意</string>
+    <string name="settings_ai_consent_subtitle">AIによる自動分類と要約を有効にする</string>
     <string name="settings_version">バージョン</string>
     <string name="settings_section_developer">開発者</string>
     <string name="settings_devtools">開発者ツール</string>
@@ -89,7 +91,11 @@
 
     <string name="language_settings_title">言語選択</string>
     <string name="language_settings_ja">日本語</string>
+    <string name="language_settings_ja_native">日本語</string>
+    <string name="language_settings_ja_en">Japanese</string>
     <string name="language_settings_en">英語</string>
+    <string name="language_settings_en_native">English</string>
+    <string name="language_settings_en_en">English</string>
 
     <string name="theme_settings_title">テーマ選択</string>
     <string name="theme_settings_system">システム設定に従う</string>

@@ -1,9 +1,9 @@
 package cloud.poche.core.datastore
 
 import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
 import com.google.crypto.tink.Aead
 import com.google.crypto.tink.KeyTemplates
 import com.google.crypto.tink.KeysetHandle
@@ -12,25 +12,38 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.io.TempDir
+import java.io.File
 import java.util.Base64
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class SecureStorageTest {
 
-    private lateinit var secureStorage: SecureStorageImpl
+    private lateinit var secureStorage: SecureStorage
     private lateinit var context: Context
     private lateinit var aead: Aead
+    private lateinit var testDataStore: DataStore<Preferences>
+
+    @TempDir
+    lateinit var tempDir: File
 
     @BeforeEach
     fun setup() {
         context = mockk(relaxed = true)
+        val testDispatcher = UnconfinedTestDispatcher()
+        val testScope = TestScope(testDispatcher)
+
+        testDataStore = PreferenceDataStoreFactory.create(
+            scope = testScope,
+            produceFile = { File(tempDir, "test.preferences_pb") },
+        )
 
         AeadConfig.register()
         val keysetHandle = KeysetHandle.generateNew(KeyTemplates.get("AES256_GCM"))
@@ -45,18 +58,35 @@ class SecureStorageTest {
             Base64.getDecoder().decode(firstArg<String>())
         }
 
-        secureStorage = SecureStorageImpl(context)
-        // Set private aead via reflection or use a test-friendly constructor
-        val field = SecureStorageImpl::class.java.getDeclaredField("aead")
-        field.isAccessible = true
-        field.set(secureStorage, aead)
+        secureStorage = RealSecureStorage(context, aead, testDataStore)
     }
 
     @Test
-    fun `encryption roundtrip works`() = runTest {
-        val originalValue = "my_secret_password"
-        val encrypted = aead.encrypt(originalValue.toByteArray(), null)
-        val decrypted = aead.decrypt(encrypted, null)
-        assertEquals(originalValue, String(decrypted))
+    fun `putString and getString roundtrip works`() = runTest {
+        val key = "secret_key"
+        val value = "secret_value"
+
+        secureStorage.putString(key, value)
+        val loadedValue = secureStorage.getString(key)
+
+        assertEquals(value, loadedValue)
+    }
+
+    @Test
+    fun `getString returns null for non-existent key`() = runTest {
+        val loadedValue = secureStorage.getString("non_existent")
+        assertNull(loadedValue)
+    }
+
+    @Test
+    fun `remove deletes value`() = runTest {
+        val key = "key_to_delete"
+        val value = "value"
+
+        secureStorage.putString(key, value)
+        secureStorage.remove(key)
+
+        val loadedValue = secureStorage.getString(key)
+        assertNull(loadedValue)
     }
 }

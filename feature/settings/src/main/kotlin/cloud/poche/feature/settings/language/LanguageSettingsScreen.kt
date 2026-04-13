@@ -82,15 +82,15 @@ private fun LanguageSettingsScreenContent(
                         .selectableGroup(),
                 ) {
                     LanguageRadioTile(
-                        title = stringResource(R.string.language_settings_ja),
-                        subtitle = "Japanese",
+                        title = stringResource(R.string.language_settings_ja_native),
+                        subtitle = stringResource(R.string.language_settings_ja_en),
                         selected = uiState.currentLocale == "ja",
                         onClick = { onLocaleSelected("ja") },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     LanguageRadioTile(
-                        title = "English",
-                        subtitle = stringResource(R.string.language_settings_en),
+                        title = stringResource(R.string.language_settings_en_native),
+                        subtitle = stringResource(R.string.language_settings_en_en),
                         selected = uiState.currentLocale == "en",
                         onClick = { onLocaleSelected("en") },
                     )

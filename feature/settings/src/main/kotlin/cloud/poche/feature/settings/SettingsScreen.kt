@@ -24,6 +24,7 @@ import androidx.compose.material.icons.filled.DeveloperMode
 import androidx.compose.material.icons.filled.FlashOn
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.PrivacyTip
@@ -31,12 +32,16 @@ import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
@@ -57,8 +62,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import cloud.poche.core.ui.R
 import cloud.poche.core.designsystem.component.PocheTopAppBar
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 
 @Composable
 internal fun SettingsScreen(
@@ -100,6 +106,7 @@ internal fun SettingsScreen(
         onNavigateToDevTools = onNavigateToDevTools,
         onSignOutClick = viewModel::signOut,
         onDeleteAccountClick = viewModel::deleteAccount,
+        onAiConsentChange = viewModel::setAiConsent,
         modifier = modifier,
     )
 }
@@ -118,6 +125,7 @@ internal fun SettingsScreen(
     onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
+    onAiConsentChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
@@ -156,6 +164,7 @@ internal fun SettingsScreen(
                     onNavigateToDevTools = onNavigateToDevTools,
                     onSignOutClick = onSignOutClick,
                     onDeleteAccountClick = onDeleteAccountClick,
+                    onAiConsentChange = onAiConsentChange,
                     modifier = Modifier.padding(innerPadding),
                 )
             }
@@ -175,6 +184,7 @@ private fun SettingsContent(
     onNavigateToDevTools: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
+    onAiConsentChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -188,6 +198,16 @@ private fun SettingsContent(
     ) {
         // App settings section
         SettingsSectionHeader(title = stringResource(R.string.settings_section_app_settings), isFirst = true)
+
+        SettingsSwitchTile(
+            icon = Icons.Default.Lightbulb,
+            title = stringResource(R.string.settings_ai_consent),
+            subtitle = stringResource(R.string.settings_ai_consent_subtitle),
+            checked = uiState.aiConsent,
+            onCheckedChange = onAiConsentChange,
+        )
+        SettingsDivider()
+
         SettingsListTile(
             icon = Icons.Default.Notifications,
             title = stringResource(R.string.settings_notification),
@@ -250,7 +270,7 @@ private fun SettingsContent(
             icon = Icons.Default.Language,
             title = stringResource(R.string.settings_language),
             subtitle = stringResource(R.string.settings_language_subtitle),
-            onClick = onNavigateToLanguage
+            onClick = onNavigateToLanguage,
         )
         SettingsDivider()
         SettingsListTile(
@@ -399,6 +419,48 @@ private fun SettingsListTile(
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+    }
+}
+
+@Composable
+private fun SettingsSwitchTile(
+    icon: ImageVector,
+    title: String,
+    subtitle: String,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onCheckedChange(!checked) }
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            modifier = Modifier.size(24.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Spacer(modifier = Modifier.width(16.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+        Spacer(modifier = Modifier.width(16.dp))
+        Switch(
+            checked = checked,
+            onCheckedChange = onCheckedChange,
+        )
     }
 }
 

@@ -24,19 +24,20 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 @Singleton
 class RealSecureStorage @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val aead: Aead
+    private val aead: Aead,
+    private val dataStore: DataStore<Preferences> = context.dataStore,
 ) : SecureStorage {
 
     override suspend fun putString(key: String, value: String) {
         val encryptedValue = aead.encrypt(value.toByteArray(), null)
         val base64Value = android.util.Base64.encodeToString(encryptedValue, android.util.Base64.DEFAULT)
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences[stringPreferencesKey(key)] = base64Value
         }
     }
 
     override suspend fun getString(key: String): String? {
-        val base64Value = context.dataStore.data.map { preferences ->
+        val base64Value = dataStore.data.map { preferences ->
             preferences[stringPreferencesKey(key)]
         }.first() ?: return null
 
@@ -50,7 +51,7 @@ class RealSecureStorage @Inject constructor(
     }
 
     override suspend fun remove(key: String) {
-        context.dataStore.edit { preferences ->
+        dataStore.edit { preferences ->
             preferences.remove(stringPreferencesKey(key))
         }
     }

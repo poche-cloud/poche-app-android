@@ -8,5 +8,5 @@ data class NetworkSearchResult(
     val type: String,
     val title: String,
     val content: String,
-    val score: Double? = null
+    val score: Double? = null,
 )

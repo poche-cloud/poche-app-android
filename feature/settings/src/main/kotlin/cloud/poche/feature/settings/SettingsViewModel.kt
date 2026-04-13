@@ -5,10 +5,11 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import cloud.poche.core.ui.R
-import cloud.poche.core.ui.UiText
 import cloud.poche.core.auth.AuthManager
 import cloud.poche.core.domain.usecase.GetUserDataUseCase
+import cloud.poche.core.domain.usecase.SetAiConsentUseCase
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,6 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     getUserDataUseCase: GetUserDataUseCase,
+    private val setAiConsentUseCase: SetAiConsentUseCase,
     private val authManager: AuthManager,
     @ApplicationContext context: Context,
 ) : ViewModel() {
@@ -54,6 +56,7 @@ class SettingsViewModel @Inject constructor(
                 userId = userData.userId ?: authManager.currentUserId,
                 isSignedIn = isSignedIn,
                 darkThemeConfig = userData.darkThemeConfig,
+                aiConsent = userData.aiConsent,
                 appVersion = appVersion,
                 isDebugBuild = isDebugBuild,
             )
@@ -63,13 +66,19 @@ class SettingsViewModel @Inject constructor(
             initialValue = SettingsUiState.Loading,
         )
 
+    fun setAiConsent(consented: Boolean) {
+        viewModelScope.launch {
+            setAiConsentUseCase(consented)
+        }
+    }
+
     fun signOut() {
         viewModelScope.launch {
             try {
                 authManager.signOut()
                 _events.emit(SettingsEvent.SignedOut)
             } catch (e: Exception) {
-                _events.emit(SettingsEvent.ShowError(UiText.StringResource(R.string.settings_sign_out_subtitle))) // Corrected later
+                _events.emit(SettingsEvent.ShowError(UiText.StringResource(R.string.settings_sign_out_subtitle)))
             }
         }
     }
