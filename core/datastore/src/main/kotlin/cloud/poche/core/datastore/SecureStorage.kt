@@ -6,10 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.google.crypto.tink.Aead
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
+import javax.inject.Singleton
 interface SecureStorage {
     suspend fun putString(key: String, value: String)
     suspend fun getString(key: String): String?

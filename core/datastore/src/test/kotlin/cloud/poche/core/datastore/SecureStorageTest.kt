@@ -49,7 +49,7 @@ class SecureStorageTest {
         aead = keysetHandle.getPrimitive(Aead::class.java)
 
         dataStore = PreferenceDataStoreFactory.create(
-            produceFile = { File(tempDir, "test.preferences_pb") }
+            produceFile = { File(tempDir, "test.preferences_pb") },
         )
 
         secureStorage = SecureStorageImpl(dataStore, aead)
