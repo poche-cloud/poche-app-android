@@ -72,6 +72,7 @@ internal fun CaptureScreen(
     memoType: MemoType,
     onCaptureComplete: () -> Unit,
     modifier: Modifier = Modifier,
+    sharedUrl: String? = null,
     viewModel: CaptureViewModel = hiltViewModel(),
 ) {
     val isSaving by viewModel.isSaving.collectAsStateWithLifecycle()
@@ -91,6 +92,12 @@ internal fun CaptureScreen(
                 is CaptureEvent.ShowError ->
                     snackbarHostState.showSnackbar(event.message.asString(context))
             }
+        }
+    }
+
+    LaunchedEffect(sharedUrl) {
+        if (sharedUrl != null) {
+            viewModel.saveBookmarkFromUrl(sharedUrl)
         }
     }
 

@@ -11,10 +11,14 @@ import cloud.poche.feature.capture.CaptureScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CaptureRoute(val memoType: String = MemoType.TEXT.name)
+data class CaptureRoute(val memoType: String = MemoType.TEXT.name, val sharedUrl: String? = null)
 
-fun NavController.navigateToCapture(memoType: MemoType = MemoType.TEXT, navOptions: NavOptions? = null) {
-    navigate(CaptureRoute(memoType = memoType.name), navOptions)
+fun NavController.navigateToCapture(
+    memoType: MemoType = MemoType.TEXT,
+    sharedUrl: String? = null,
+    navOptions: NavOptions? = null,
+) {
+    navigate(CaptureRoute(memoType = memoType.name, sharedUrl = sharedUrl), navOptions)
 }
 
 fun NavGraphBuilder.captureScreen(onCaptureComplete: () -> Unit) {
@@ -29,6 +33,7 @@ fun NavGraphBuilder.captureScreen(onCaptureComplete: () -> Unit) {
         CaptureScreen(
             memoType = memoType,
             onCaptureComplete = onCaptureComplete,
+            sharedUrl = route.sharedUrl,
         )
     }
 }

@@ -67,6 +67,37 @@ internal class CaptureViewModel @Inject constructor(
             }
         }
     }
+
+    fun saveBookmarkFromUrl(url: String) {
+        val bookmarkUrl = ShareIntentHandler.extractUrl(url)
+        if (bookmarkUrl == null) {
+            viewModelScope.launch {
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_empty_input)))
+            }
+            return
+        }
+        viewModelScope.launch {
+            _isSaving.value = true
+            try {
+                val now = System.currentTimeMillis()
+                saveMemoUseCase(
+                    Memo(
+                        id = UUID.randomUUID().toString(),
+                        content = bookmarkUrl,
+                        type = MemoType.TEXT,
+                        createdAt = now,
+                        updatedAt = now,
+                        pendingSync = true,
+                    ),
+                )
+                _events.emit(CaptureEvent.SaveSuccess)
+            } catch (e: Exception) {
+                _events.emit(CaptureEvent.ShowError(UiText.StringResource(R.string.capture_error_save_failed)))
+            } finally {
+                _isSaving.value = false
+            }
+        }
+    }
     // endregion
 
     // region Photo

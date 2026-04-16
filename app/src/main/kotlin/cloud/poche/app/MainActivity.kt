@@ -1,5 +1,6 @@
 package cloud.poche.app
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -31,21 +32,27 @@ import cloud.poche.app.navigation.PocheNavHost
 import cloud.poche.core.designsystem.theme.PocheTheme
 import cloud.poche.core.domain.usecase.ForceUpdateStatus
 import cloud.poche.core.model.DarkThemeConfig
+import cloud.poche.core.model.MemoType
 import cloud.poche.core.ui.ForceUpdateDialog
+import cloud.poche.feature.capture.ShareIntentHandler
+import cloud.poche.feature.capture.navigation.navigateToCapture
 import cloud.poche.feature.devtools.component.DebugTagOverlay
 import cloud.poche.feature.home.navigation.HomeRoute
 import cloud.poche.feature.home.navigation.navigateToHome
 import cloud.poche.feature.settings.navigation.SettingsRoute
 import cloud.poche.feature.settings.navigation.navigateToSettings
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
+    private val incomingShareUrl = MutableStateFlow<String?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        handleIncomingShare(intent)
         enableEdgeToEdge()
         val currentVersion = packageManager.getPackageInfo(packageName, 0).versionName ?: "1.0.0"
 
@@ -53,6 +60,7 @@ class MainActivity : ComponentActivity() {
             val darkThemeConfig by viewModel.darkThemeConfig.collectAsStateWithLifecycle()
             val isOnboardingCompleted by viewModel.isOnboardingCompleted.collectAsStateWithLifecycle()
             val forceUpdateStatus by viewModel.forceUpdateStatus.collectAsStateWithLifecycle()
+            val sharedUrl by incomingShareUrl.collectAsStateWithLifecycle()
 
             LaunchedEffect(Unit) {
                 viewModel.checkForceUpdate(currentVersion)
@@ -68,18 +76,45 @@ class MainActivity : ComponentActivity() {
                 if (forceUpdateStatus == ForceUpdateStatus.UPDATE_REQUIRED) {
                     ForceUpdateDialog(packageName = packageName)
                 } else if (isOnboardingCompleted != null) {
-                    PocheApp(isOnboardingCompleted = isOnboardingCompleted!!)
+                    PocheApp(
+                        isOnboardingCompleted = isOnboardingCompleted!!,
+                        sharedUrl = sharedUrl,
+                        onShareHandled = { incomingShareUrl.value = null },
+                    )
                 }
             }
         }
     }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIncomingShare(intent)
+    }
+
+    private fun handleIncomingShare(intent: Intent?) {
+        incomingShareUrl.value = intent?.let(ShareIntentHandler::extractUrl)
+    }
 }
 
 @Composable
-fun PocheApp(isOnboardingCompleted: Boolean) {
+fun PocheApp(isOnboardingCompleted: Boolean, sharedUrl: String? = null, onShareHandled: () -> Unit = {}) {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
+
+    LaunchedEffect(sharedUrl, isOnboardingCompleted) {
+        if (sharedUrl != null && isOnboardingCompleted) {
+            navController.navigateToCapture(
+                memoType = MemoType.TEXT,
+                sharedUrl = sharedUrl,
+                navOptions = androidx.navigation.navOptions {
+                    launchSingleTop = true
+                },
+            )
+            onShareHandled()
+        }
+    }
 
     val showBottomBar = currentDestination?.hasRoute<HomeRoute>() == true ||
         currentDestination?.hasRoute<SettingsRoute>() == true
