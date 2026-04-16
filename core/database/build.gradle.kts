@@ -7,3 +7,10 @@ plugins {
 android {
     namespace = "cloud.poche.core.database"
 }
+
+dependencies {
+    testImplementation(libs.junit4)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.turbine)
+}
