@@ -3,7 +3,6 @@ package cloud.poche.feature.memo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import cloud.poche.core.domain.usecase.GetMemoByIdUseCase
 import cloud.poche.core.domain.usecase.UpdateMemoUseCase
 import cloud.poche.core.ui.R
@@ -27,13 +26,15 @@ internal class MemoDetailViewModel @Inject constructor(
     private val updateMemoUseCase: UpdateMemoUseCase,
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<MemoDetailRoute>()
+    private val memoId = checkNotNull(savedStateHandle.get<String>(MemoDetailRoute.MEMO_ID_ARG)) {
+        "memoId is required"
+    }
 
     private val _events = MutableSharedFlow<MemoDetailEvent>()
     val events = _events.asSharedFlow()
 
     val uiState: StateFlow<MemoDetailUiState> =
-        getMemoByIdUseCase(route.memoId)
+        getMemoByIdUseCase(memoId)
             .map<_, MemoDetailUiState> { memo -> MemoDetailUiState.Success(memo = memo) }
             .catch { e ->
                 emit(
