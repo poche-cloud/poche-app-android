@@ -9,7 +9,11 @@ import cloud.poche.feature.memo.MemoDetailScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MemoDetailRoute(val memoId: String)
+data class MemoDetailRoute(val memoId: String) {
+    companion object {
+        const val MEMO_ID_ARG = "memoId"
+    }
+}
 
 fun NavController.navigateToMemoDetail(memoId: String, navOptions: NavOptions? = null) {
     navigate(MemoDetailRoute(memoId), navOptions)

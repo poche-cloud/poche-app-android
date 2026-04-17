@@ -1,5 +1,8 @@
 package cloud.poche.core.network.di
 
+import cloud.poche.core.network.KtorPocheNetwork
+import cloud.poche.core.network.PocheNetworkDataSource
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,26 +21,33 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object NetworkModule {
-    @Provides
-    @Singleton
-    fun provideJson(): Json = Json {
-        ignoreUnknownKeys = true
-        coerceInputValues = true
-        isLenient = true
-    }
+abstract class NetworkModule {
 
-    @Provides
+    @Binds
     @Singleton
-    fun provideHttpClient(json: Json): HttpClient = HttpClient(OkHttp) {
-        install(ContentNegotiation) {
-            json(json)
+    internal abstract fun bindPocheNetworkDataSource(impl: KtorPocheNetwork): PocheNetworkDataSource
+
+    companion object {
+        @Provides
+        @Singleton
+        fun provideJson(): Json = Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+            isLenient = true
         }
-        install(Logging) {
-            level = LogLevel.BODY
-        }
-        defaultRequest {
-            contentType(ContentType.Application.Json)
+
+        @Provides
+        @Singleton
+        fun provideHttpClient(json: Json): HttpClient = HttpClient(OkHttp) {
+            install(ContentNegotiation) {
+                json(json)
+            }
+            install(Logging) {
+                level = LogLevel.BODY
+            }
+            defaultRequest {
+                contentType(ContentType.Application.Json)
+            }
         }
     }
 }

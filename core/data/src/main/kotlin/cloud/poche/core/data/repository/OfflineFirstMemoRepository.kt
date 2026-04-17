@@ -32,6 +32,8 @@ class OfflineFirstMemoRepository @Inject constructor(private val memoDao: MemoDa
     override suspend fun getMemoCount(): Int = memoDao.getMemoCount()
 
     override suspend fun deleteAll() = memoDao.deleteAll()
+
+    override suspend fun getPendingSyncMemos(): List<Memo> = memoDao.getPendingSyncMemos().map { it.toDomain() }
 }
 
 private fun MemoEntity.toDomain() = Memo(
@@ -42,6 +44,7 @@ private fun MemoEntity.toDomain() = Memo(
     updatedAt = updatedAt,
     filePath = filePath,
     durationMs = durationMs,
+    pendingSync = pendingSync,
 )
 
 private fun Memo.toEntity() = MemoEntity(
@@ -52,4 +55,5 @@ private fun Memo.toEntity() = MemoEntity(
     updatedAt = updatedAt,
     filePath = filePath,
     durationMs = durationMs,
+    pendingSync = pendingSync,
 )

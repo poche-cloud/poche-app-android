@@ -7,6 +7,8 @@ import cloud.poche.core.domain.usecase.DeleteAllMemosUseCase
 import cloud.poche.core.domain.usecase.ExportMemosUseCase
 import cloud.poche.core.domain.usecase.GetStorageUsageUseCase
 import cloud.poche.core.model.StorageUsage
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -50,7 +52,9 @@ internal class DataManagementViewModel @Inject constructor(
                 file.writeText(json)
                 _events.emit(DataManagementEvent.ExportSuccess(file))
             } catch (_: Exception) {
-                _events.emit(DataManagementEvent.ShowError("エクスポートに失敗しました"))
+                _events.emit(
+                    DataManagementEvent.ShowError(UiText.StringResource(R.string.data_management_error_export_failed)),
+                )
             }
         }
     }
@@ -62,7 +66,9 @@ internal class DataManagementViewModel @Inject constructor(
                 loadStorageUsage()
                 _events.emit(DataManagementEvent.DeleteSuccess)
             } catch (_: Exception) {
-                _events.emit(DataManagementEvent.ShowError("削除に失敗しました"))
+                _events.emit(
+                    DataManagementEvent.ShowError(UiText.StringResource(R.string.data_management_error_delete_failed)),
+                )
             }
         }
     }
@@ -76,5 +82,5 @@ internal sealed interface DataManagementUiState {
 internal sealed interface DataManagementEvent {
     data class ExportSuccess(val file: File) : DataManagementEvent
     data object DeleteSuccess : DataManagementEvent
-    data class ShowError(val message: String) : DataManagementEvent
+    data class ShowError(val message: UiText) : DataManagementEvent
 }

@@ -28,8 +28,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun QuickCaptureBar(
@@ -54,7 +56,7 @@ internal fun QuickCaptureBar(
             IconButton(onClick = onPlusPressed) {
                 Icon(
                     imageVector = Icons.Default.AddCircleOutline,
-                    contentDescription = "追加",
+                    contentDescription = stringResource(R.string.home_quick_capture_plus),
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
@@ -63,7 +65,7 @@ internal fun QuickCaptureBar(
                 value = text,
                 onValueChange = { text = it },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("メモを入力...") },
+                placeholder = { Text(stringResource(R.string.capture_input_placeholder)) },
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Send),
                 keyboardActions = KeyboardActions(
@@ -111,7 +113,7 @@ internal fun QuickCaptureBar(
                 ) {
                     Icon(
                         imageVector = Icons.Default.MoveToInbox,
-                        contentDescription = "ポケットに入れる",
+                        contentDescription = stringResource(R.string.home_quick_capture_submit),
                         tint = if (canSubmit) {
                             MaterialTheme.colorScheme.primary
                         } else {

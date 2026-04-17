@@ -22,7 +22,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun EnvironmentInfoSection(
@@ -34,34 +36,34 @@ internal fun EnvironmentInfoSection(
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
-        SectionHeader(title = "環境情報")
+        SectionHeader(title = stringResource(R.string.environment_info_title))
         InfoTile(
             icon = Icons.Outlined.Info,
-            title = "アプリバージョン",
+            title = stringResource(R.string.environment_info_app_version),
             value = appVersion,
         )
         InfoDivider()
         InfoTile(
             icon = Icons.Outlined.Build,
-            title = "ビルド番号",
+            title = stringResource(R.string.environment_info_build_number),
             value = buildNumber,
         )
         InfoDivider()
         InfoTile(
             icon = Icons.Outlined.Inventory2,
-            title = "パッケージ名",
+            title = stringResource(R.string.environment_info_package_name),
             value = packageName,
         )
         InfoDivider()
         InfoTile(
             icon = Icons.Outlined.Fingerprint,
-            title = "ビルドタイプ",
+            title = stringResource(R.string.environment_info_build_type),
             value = buildType,
         )
         InfoDivider()
         InfoTile(
             icon = Icons.AutoMirrored.Outlined.Label,
-            title = "フレーバー",
+            title = stringResource(R.string.environment_info_flavor),
             value = flavor,
         )
     }

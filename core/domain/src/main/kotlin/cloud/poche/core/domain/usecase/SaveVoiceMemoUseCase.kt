@@ -17,6 +17,7 @@ class SaveVoiceMemoUseCase @Inject constructor(private val memoRepository: MemoR
             updatedAt = now,
             filePath = filePath,
             durationMs = durationMs,
+            pendingSync = true,
         )
         memoRepository.createMemo(memo)
     }

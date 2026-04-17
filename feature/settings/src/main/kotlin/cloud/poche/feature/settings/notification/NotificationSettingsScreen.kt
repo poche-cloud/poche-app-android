@@ -25,7 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
+import cloud.poche.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,12 +56,12 @@ internal fun NotificationSettingsScreen(onBackClick: () -> Unit, modifier: Modif
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("通知設定") },
+                title = { Text(stringResource(R.string.notification_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },
@@ -72,8 +74,8 @@ internal fun NotificationSettingsScreen(onBackClick: () -> Unit, modifier: Modif
                 .padding(innerPadding),
         ) {
             androidx.compose.material3.ListItem(
-                headlineContent = { Text("プッシュ通知") },
-                supportingContent = { Text("新しいメモのリマインダーや重要なお知らせを受け取る") },
+                headlineContent = { Text(stringResource(R.string.notification_settings_push)) },
+                supportingContent = { Text(stringResource(R.string.notification_settings_push_description)) },
                 leadingContent = {
                     Icon(
                         imageVector = Icons.Default.Notifications,

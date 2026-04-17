@@ -3,9 +3,10 @@ package cloud.poche.feature.memo
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
 import cloud.poche.core.domain.usecase.GetMemoByIdUseCase
 import cloud.poche.core.domain.usecase.UpdateMemoUseCase
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import cloud.poche.feature.memo.navigation.MemoDetailRoute
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -25,15 +26,24 @@ internal class MemoDetailViewModel @Inject constructor(
     private val updateMemoUseCase: UpdateMemoUseCase,
 ) : ViewModel() {
 
-    private val route = savedStateHandle.toRoute<MemoDetailRoute>()
+    private val memoId = checkNotNull(savedStateHandle.get<String>(MemoDetailRoute.MEMO_ID_ARG)) {
+        "memoId is required"
+    }
 
     private val _events = MutableSharedFlow<MemoDetailEvent>()
     val events = _events.asSharedFlow()
 
     val uiState: StateFlow<MemoDetailUiState> =
-        getMemoByIdUseCase(route.memoId)
+        getMemoByIdUseCase(memoId)
             .map<_, MemoDetailUiState> { memo -> MemoDetailUiState.Success(memo = memo) }
-            .catch { e -> emit(MemoDetailUiState.Error(message = e.message ?: "メモの読み込みに失敗しました")) }
+            .catch { e ->
+                emit(
+                    MemoDetailUiState.Error(
+                        message = e.message?.let { UiText.DynamicString(it) }
+                            ?: UiText.StringResource(R.string.error_load_failed),
+                    ),
+                )
+            }
             .stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
@@ -45,7 +55,7 @@ internal class MemoDetailViewModel @Inject constructor(
         if (currentState !is MemoDetailUiState.Success) return
         if (content.isBlank()) {
             viewModelScope.launch {
-                _events.emit(MemoDetailEvent.ShowError("内容を入力してください"))
+                _events.emit(MemoDetailEvent.ShowError(UiText.StringResource(R.string.error_content_empty)))
             }
             return
         }
@@ -59,7 +69,7 @@ internal class MemoDetailViewModel @Inject constructor(
                 updateMemoUseCase(updated)
                 _events.emit(MemoDetailEvent.Saved)
             } catch (e: Exception) {
-                _events.emit(MemoDetailEvent.ShowError("保存に失敗しました"))
+                _events.emit(MemoDetailEvent.ShowError(UiText.StringResource(R.string.error_save_failed)))
             }
         }
     }
@@ -67,5 +77,5 @@ internal class MemoDetailViewModel @Inject constructor(
 
 internal sealed interface MemoDetailEvent {
     data object Saved : MemoDetailEvent
-    data class ShowError(val message: String) : MemoDetailEvent
+    data class ShowError(val message: UiText) : MemoDetailEvent
 }

@@ -9,6 +9,13 @@
     <string name="home_quick_capture_submit">ポケットに入れる</string>
     <string name="home_quick_capture_add">追加</string>
 
+    <!-- Memo Detail -->
+    <string name="memo_detail_title">メモ詳細</string>
+    <string name="memo_edit_title">編集</string>
+    <string name="memo_input_placeholder">メモを入力…</string>
+    <string name="memo_saved">保存しました</string>
+    <string name="memo_save">保存</string>
+
     <!-- Capture Action Sheet -->
     <string name="capture_memo">複数行メモ</string>
     <string name="capture_memo_desc">長文のメモを書く</string>
@@ -18,9 +25,13 @@
     <string name="capture_voice_desc">音声を録音</string>
 
     <!-- Common -->
+    <string name="back">戻る</string>
+    <string name="cancel">キャンセル</string>
     <string name="delete_memo">メモを削除</string>
     <string name="error_delete_failed">削除に失敗しました</string>
     <string name="error_save_failed">保存に失敗しました</string>
+    <string name="error_load_failed">メモの読み込みに失敗しました</string>
+    <string name="error_content_empty">内容を入力してください</string>
     <string name="error_unknown">不明なエラー</string>
 
     <!-- Navigation -->

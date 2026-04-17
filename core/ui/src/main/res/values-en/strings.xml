@@ -1,6 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="force_update_title">Update required</string>
-    <string name="force_update_message">Please update to the latest version from the store.</string>
-    <string name="force_update_button">Open Store</string>
+    <string name="app_name">Poche</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_sign_out">Sign out</string>
+    <string name="settings_delete_account">Delete account</string>
+    <string name="onboarding_title">Welcome to Poche</string>
+    <string name="onboarding_description">Your personal knowledge base</string>
+    <string name="common_save">Save</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_back">Back</string>
+    <string name="common_delete">Delete</string>
+    <string name="common_retry">Retry</string>
+
+    <!-- Aliases for features -->
+    <string name="memo_save">Save</string>
+    <string name="memo_saved">Saved successfully</string>
+    <string name="memo_edit_title">Edit Memo</string>
+    <string name="memo_detail_title">Memo Details</string>
+    <string name="memo_input_placeholder">Enter memo content…</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_load_failed">Failed to load</string>
+    <string name="error_content_empty">Please enter content</string>
+    <string name="error_save_failed">Failed to save</string>
+    <string name="error_delete_failed">Failed to delete</string>
+    <string name="error_unknown">Unknown error</string>
+
+    <string name="settings_section_app_settings">App Settings</string>
+    <string name="settings_notification">Notifications</string>
+    <string name="settings_notification_subtitle">Change push notification settings</string>
+    <string name="settings_theme">Theme</string>
+    <string name="settings_theme_subtitle">Change app appearance</string>
+    <string name="settings_language_subtitle">Change display language</string>
+    <string name="settings_capture">Capture Settings</string>
+    <string name="settings_capture_subtitle">Configure quick capture behavior</string>
+    <string name="settings_data_management">Data Management</string>
+    <string name="settings_data_management_subtitle">Backup and sync settings</string>
+    <string name="settings_section_legal">Legal</string>
+    <string name="settings_terms_of_service">Terms of Service</string>
+    <string name="settings_terms_of_service_subtitle">Check service terms of use</string>
+    <string name="settings_privacy_policy">Privacy Policy</string>
+    <string name="settings_privacy_policy_subtitle">Check how personal info is handled</string>
+    <string name="settings_oss_licenses">Open Source Licenses</string>
+    <string name="settings_oss_licenses_subtitle">Open source software being used</string>
+    <string name="settings_ai_consent">AI Analysis Consent</string>
+    <string name="settings_ai_consent_subtitle">Enable AI-powered classification and summarization</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_section_developer">Developer</string>
+    <string name="settings_devtools">Developer Tools</string>
+    <string name="settings_devtools_subtitle">Env info, feature flags, cache actions</string>
+    <string name="settings_section_account">Account</string>
+    <string name="settings_sign_out_subtitle">Sign out from your account</string>
+    <string name="settings_delete_account_subtitle">Completely delete account and data</string>
+    <string name="settings_dialog_sign_out_title">Sign Out</string>
+    <string name="settings_dialog_sign_out_message">Are you sure you want to sign out?</string>
+    <string name="settings_dialog_sign_out_confirm">Sign out</string>
+    <string name="settings_dialog_delete_account_message">This action cannot be undone. Your account and all data will be permanently deleted. Are you sure you want to delete?</string>
+    <string name="settings_dialog_delete_account_confirm">Delete</string>
+
+    <string name="home_empty_title">No memos yet</string>
+    <string name="home_empty_description">Add a memo from the bar below</string>
+    <string name="home_quick_capture_plus">Add</string>
+    <string name="home_quick_capture_submit">Put in pocket</string>
+    <string name="home_capture_option_text">Multi-line Memo</string>
+    <string name="home_capture_option_text_desc">Write a long memo</string>
+    <string name="home_capture_option_photo">Photo</string>
+    <string name="home_capture_option_photo_desc">Take a photo and save</string>
+    <string name="home_capture_option_voice">Voice Memo</string>
+    <string name="home_capture_option_voice_desc">Record audio</string>
+
+    <string name="capture_error_empty_input">Please enter content</string>
+    <string name="capture_error_save_failed">Failed to save</string>
+    <string name="capture_error_audio_start_failed">Failed to start recording</string>
+    <string name="capture_error_audio_failed">Recording failed</string>
+    <string name="capture_error_playback_failed">Playback failed</string>
+
+    <string name="data_management_title">Data Management</string>
+    <string name="data_management_storage_usage">Storage Usage</string>
+    <string name="data_management_database">Database</string>
+    <string name="data_management_files">Files</string>
+    <string name="data_management_total">Total</string>
+    <string name="data_management_export_json">Export memos (JSON)</string>
+    <string name="data_management_delete_all">Delete all memos</string>
+    <string name="data_management_delete_all_dialog_title">Delete All Memos</string>
+    <string name="data_management_delete_all_dialog_message">This action cannot be undone. All memos will be permanently deleted. Are you sure you want to delete?</string>
+    <string name="data_management_delete_all_snackbar_success">All memos deleted</string>
+    <string name="data_management_error_export_failed">Export failed</string>
+    <string name="data_management_error_delete_failed">Deletion failed</string>
+
+    <string name="language_settings_title">Select Language</string>
+    <string name="language_settings_ja">Japanese</string>
+    <string name="language_settings_ja_native">日本語</string>
+    <string name="language_settings_ja_en">Japanese</string>
+    <string name="language_settings_en">English</string>
+    <string name="language_settings_en_native">English</string>
+    <string name="language_settings_en_en">English</string>
+
+    <string name="theme_settings_title">Select Theme</string>
+    <string name="theme_settings_system">Follow System</string>
+    <string name="theme_settings_system_description">Use device theme settings</string>
+    <string name="theme_settings_light">Light</string>
+    <string name="theme_settings_light_description">Always use light theme</string>
+    <string name="theme_settings_dark">Dark</string>
+    <string name="theme_settings_dark_description">Always use dark theme</string>
+
+    <string name="devtools_title">Developer Tools</string>
+    <string name="devtools_cache_clear_success">Cache cleared</string>
+    <string name="devtools_cache_clear_failed">Failed to clear cache</string>
+
+    <string name="feature_flags_title">Feature Flags</string>
+    <string name="feature_flags_empty">No feature flags configured</string>
+    <string name="feature_flags_enabled">Enabled</string>
+    <string name="feature_flags_disabled">Disabled</string>
+
+    <string name="environment_info_title">Environment Info</string>
+    <string name="environment_info_app_version">App Version</string>
+    <string name="environment_info_build_number">Build Number</string>
+    <string name="environment_info_package_name">Package Name</string>
+    <string name="environment_info_build_type">Build Type</string>
+    <string name="environment_info_flavor">Flavor</string>
+
+    <string name="cache_actions_title">Cache Actions</string>
+    <string name="cache_actions_clear_all">Clear all cache</string>
+    <string name="cache_actions_clear_all_description">Deletes all app cache data</string>
+
+    <string name="oss_licenses_title">Open Source Licenses</string>
+
+    <string name="capture_settings_title">Capture Settings</string>
+    <string name="capture_settings_default_type">Default Capture Type</string>
+    <string name="capture_settings_type_selection">Show selection screen</string>
+    <string name="capture_settings_type_selection_desc">Select type every time</string>
+    <string name="capture_settings_type_text">Text memo</string>
+    <string name="capture_settings_type_text_desc">Open text input directly</string>
+    <string name="capture_settings_type_photo">Photo</string>
+    <string name="capture_settings_type_photo_desc">Open camera directly</string>
+    <string name="capture_settings_type_voice">Voice memo</string>
+    <string name="capture_settings_type_voice_desc">Open recording screen directly</string>
+
+    <string name="capture_title_text">Memo</string>
+    <string name="capture_title_photo">Photo</string>
+    <string name="capture_title_voice">Voice Memo</string>
+    <string name="capture_input_placeholder">Enter memo content…</string>
+    <string name="capture_photo_take">Take Photo</string>
+    <string name="capture_photo_pick">Choose from Gallery</string>
+    <string name="capture_photo_retake">Retake</string>
+    <string name="capture_caption_placeholder">Add a caption…</string>
+    <string name="capture_voice_ready">Tap to start recording</string>
+    <string name="capture_voice_recording">Recording…</string>
+    <string name="capture_voice_retake">Retake</string>
+    <string name="capture_voice_play">Play</string>
+    <string name="capture_voice_pause">Pause</string>
+    <string name="capture_voice_stop">Stop</string>
+    <string name="capture_voice_start">Start Recording</string>
+
+    <string name="notification_settings_title">Notification Settings</string>
+    <string name="notification_settings_push">Push Notifications</string>
+    <string name="notification_settings_push_description">Receive reminders and important notices</string>
+
+    <!-- Force Update -->
+    <string name="force_update_title">Update Available</string>
+    <string name="force_update_message">A new version of the app is available. Please update for the latest features and security improvements.</string>
+    <string name="force_update_button">Update Now</string>
 </resources>

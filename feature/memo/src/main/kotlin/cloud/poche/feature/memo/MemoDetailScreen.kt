@@ -36,9 +36,17 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.model.MemoType
+import cloud.poche.core.ui.AudioPlayer
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
+import coil3.compose.AsyncImage
 
 @Composable
 internal fun MemoDetailScreen(
@@ -49,15 +57,16 @@ internal fun MemoDetailScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
                 is MemoDetailEvent.Saved ->
-                    snackbarHostState.showSnackbar("保存しました")
+                    snackbarHostState.showSnackbar(context.getString(R.string.memo_saved))
 
                 is MemoDetailEvent.ShowError ->
-                    snackbarHostState.showSnackbar(event.message)
+                    snackbarHostState.showSnackbar(event.message.asString(context))
             }
         }
     }
@@ -87,12 +96,20 @@ private fun MemoDetailScreenContent(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(if (isEditing) "編集" else "メモ詳細") },
+                title = {
+                    Text(
+                        if (isEditing) {
+                            stringResource(R.string.memo_edit_title)
+                        } else {
+                            stringResource(R.string.memo_detail_title)
+                        },
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
@@ -102,7 +119,7 @@ private fun MemoDetailScreenContent(
                             IconButton(onClick = { isEditing = false }) {
                                 Icon(
                                     imageVector = Icons.Default.Close,
-                                    contentDescription = "キャンセル",
+                                    contentDescription = stringResource(R.string.cancel),
                                 )
                             }
                         } else {
@@ -112,7 +129,7 @@ private fun MemoDetailScreenContent(
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.Edit,
-                                    contentDescription = "編集",
+                                    contentDescription = stringResource(R.string.memo_edit_title),
                                 )
                             }
                         }
@@ -129,7 +146,7 @@ private fun MemoDetailScreenContent(
                         isEditing = false
                     },
                     icon = { Icon(Icons.Default.Save, contentDescription = null) },
-                    text = { Text("保存") },
+                    text = { Text(stringResource(R.string.memo_save)) },
                 )
             }
         },
@@ -155,7 +172,7 @@ private fun MemoDetailScreenContent(
                             .fillMaxSize()
                             .padding(innerPadding)
                             .padding(16.dp),
-                        placeholder = { Text("メモを入力...") },
+                        placeholder = { Text(stringResource(R.string.memo_input_placeholder)) },
                     )
                 } else {
                     Column(
@@ -165,6 +182,25 @@ private fun MemoDetailScreenContent(
                             .verticalScroll(rememberScrollState())
                             .padding(16.dp),
                     ) {
+                        if (uiState.memo.type == MemoType.PHOTO && uiState.memo.filePath != null) {
+                            AsyncImage(
+                                model = uiState.memo.filePath,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(300.dp)
+                                    .padding(bottom = 16.dp),
+                                contentScale = ContentScale.Crop,
+                            )
+                        }
+
+                        if (uiState.memo.type == MemoType.VOICE && uiState.memo.filePath != null) {
+                            AudioPlayer(
+                                filePath = uiState.memo.filePath!!,
+                                modifier = Modifier.padding(bottom = 16.dp),
+                            )
+                        }
+
                         Text(
                             text = uiState.memo.content,
                             style = MaterialTheme.typography.bodyLarge,
@@ -182,13 +218,13 @@ private fun MemoDetailScreenContent(
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
-                            text = uiState.message,
+                            text = uiState.message.asString(),
                             style = MaterialTheme.typography.bodyLarge,
                             color = MaterialTheme.colorScheme.error,
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(onClick = onBackClick) {
-                            Text("戻る")
+                            Text(stringResource(R.string.back))
                         }
                     }
                 }

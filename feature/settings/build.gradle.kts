@@ -10,6 +10,7 @@ android {
 dependencies {
     implementation(project(":core:auth"))
     implementation(project(":core:data"))
+    implementation(project(":core:ui"))
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.compose.material.icons.extended)
 }

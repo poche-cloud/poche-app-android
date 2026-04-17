@@ -19,6 +19,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import cloud.poche.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,12 +47,12 @@ internal fun OssLicensesScreen(onBackClick: () -> Unit, modifier: Modifier = Mod
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("オープンソースライセンス") },
+                title = { Text(stringResource(R.string.oss_licenses_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },

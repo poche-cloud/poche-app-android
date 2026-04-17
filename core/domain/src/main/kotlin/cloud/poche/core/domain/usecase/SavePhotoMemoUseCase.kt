@@ -16,6 +16,7 @@ class SavePhotoMemoUseCase @Inject constructor(private val memoRepository: MemoR
             createdAt = now,
             updatedAt = now,
             filePath = filePath,
+            pendingSync = true,
         )
         memoRepository.createMemo(memo)
     }

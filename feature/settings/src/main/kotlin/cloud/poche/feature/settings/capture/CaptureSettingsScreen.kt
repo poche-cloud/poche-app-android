@@ -24,10 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun CaptureSettingsScreen(
@@ -57,12 +59,12 @@ private fun CaptureSettingsScreenContent(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("キャプチャ設定") },
+                title = { Text(stringResource(R.string.capture_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },
@@ -80,35 +82,35 @@ private fun CaptureSettingsScreenContent(
                         .selectableGroup(),
                 ) {
                     Text(
-                        text = "デフォルトのキャプチャタイプ",
+                        text = stringResource(R.string.capture_settings_default_type),
                         style = MaterialTheme.typography.titleSmall,
                         color = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
                     )
                     CaptureTypeRadioTile(
-                        title = "選択画面を表示",
-                        subtitle = "毎回タイプを選択する",
+                        title = stringResource(R.string.capture_settings_type_selection),
+                        subtitle = stringResource(R.string.capture_settings_type_selection_desc),
                         selected = uiState.defaultCaptureType == null,
                         onClick = { onTypeSelected(null) },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     CaptureTypeRadioTile(
-                        title = "テキストメモ",
-                        subtitle = "テキスト入力画面を直接開く",
+                        title = stringResource(R.string.capture_settings_type_text),
+                        subtitle = stringResource(R.string.capture_settings_type_text_desc),
                         selected = uiState.defaultCaptureType == "TEXT",
                         onClick = { onTypeSelected("TEXT") },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     CaptureTypeRadioTile(
-                        title = "写真",
-                        subtitle = "カメラを直接開く",
+                        title = stringResource(R.string.capture_settings_type_photo),
+                        subtitle = stringResource(R.string.capture_settings_type_photo_desc),
                         selected = uiState.defaultCaptureType == "PHOTO",
                         onClick = { onTypeSelected("PHOTO") },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     CaptureTypeRadioTile(
-                        title = "音声メモ",
-                        subtitle = "録音画面を直接開く",
+                        title = stringResource(R.string.capture_settings_type_voice),
+                        subtitle = stringResource(R.string.capture_settings_type_voice_desc),
                         selected = uiState.defaultCaptureType == "VOICE",
                         onClick = { onTypeSelected("VOICE") },
                     )
