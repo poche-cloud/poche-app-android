@@ -73,8 +73,8 @@ poche-app-android/
 - `core/data` → `core/domain`, `core/database`, `core/network`, `core/datastore`
 - `core/domain` → `core/model`, `core/common`
 - `app` → `feature/*`, `core/*` (assembles all modules, DI wiring)
-- [Forbidden] Circular dependencies between modules
-- [Forbidden] `feature` → `feature` direct dependency (routing via app module)
+- Circular dependencies between modules are not used
+- `feature` → `feature` direct dependency is not used; inter-feature communication routes through the app module
 
 ## Build Commands
 
