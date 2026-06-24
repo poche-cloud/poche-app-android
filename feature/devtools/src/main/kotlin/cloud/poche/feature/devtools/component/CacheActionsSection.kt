@@ -17,12 +17,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun CacheActionsSection(onClearCache: () -> Unit, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
-        SectionHeader(title = "キャッシュ操作")
+        SectionHeader(title = stringResource(R.string.cache_actions_title))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -39,11 +41,11 @@ internal fun CacheActionsSection(onClearCache: () -> Unit, modifier: Modifier = 
             Spacer(modifier = Modifier.width(16.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "全キャッシュをクリア",
+                    text = stringResource(R.string.cache_actions_clear_all),
                     style = MaterialTheme.typography.bodyLarge,
                 )
                 Text(
-                    text = "アプリのキャッシュデータをすべて削除します",
+                    text = stringResource(R.string.cache_actions_clear_all_description),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )

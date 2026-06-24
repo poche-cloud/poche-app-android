@@ -9,6 +9,7 @@ sealed interface SettingsUiState {
         val userId: String?,
         val isSignedIn: Boolean,
         val darkThemeConfig: DarkThemeConfig,
+        val aiConsent: Boolean = false,
         val appVersion: String,
         val isDebugBuild: Boolean = false,
     ) : SettingsUiState

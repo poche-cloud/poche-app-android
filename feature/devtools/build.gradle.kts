@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.poche.android.feature)
+    alias(libs.plugins.poche.android.testing)
 }
 
 android {

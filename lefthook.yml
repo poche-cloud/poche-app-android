@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  commands:
+    detekt:
+      glob: "*.kt"
+      run: ./gradlew detekt
+    spotless:
+      glob: "*.kt"
+      run: ./gradlew spotlessApply

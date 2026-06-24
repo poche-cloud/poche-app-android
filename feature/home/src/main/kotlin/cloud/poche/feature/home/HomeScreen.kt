@@ -33,12 +33,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cloud.poche.core.model.Memo
 import cloud.poche.core.model.MemoType
 import cloud.poche.core.ui.MemoCard
+import cloud.poche.core.ui.R
+import cloud.poche.core.ui.UiText
 import cloud.poche.feature.home.component.CaptureActionSheet
 import cloud.poche.feature.home.component.QuickCaptureBar
 
@@ -51,12 +55,13 @@ internal fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
                 is HomeEvent.ShowError -> {
-                    snackbarHostState.showSnackbar(event.message)
+                    snackbarHostState.showSnackbar(event.message.asString(context))
                 }
 
                 is HomeEvent.CaptureSuccess -> Unit
@@ -93,7 +98,7 @@ internal fun HomeScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            TopAppBar(title = { Text("Poche") })
+            TopAppBar(title = { Text(stringResource(R.string.app_name)) })
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
     ) { innerPadding ->
@@ -164,13 +169,13 @@ private fun EmptyState(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "メモがありません",
+                text = stringResource(R.string.home_empty_title),
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "下のバーからメモを追加しましょう",
+                text = stringResource(R.string.home_empty_description),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
             )
@@ -179,20 +184,20 @@ private fun EmptyState(modifier: Modifier = Modifier) {
 }
 
 @Composable
-private fun ErrorState(message: String, onRetry: () -> Unit, modifier: Modifier = Modifier) {
+private fun ErrorState(message: UiText, onRetry: () -> Unit, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = message,
+                text = message.asString(),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.error,
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(onClick = onRetry) {
-                Text(text = "再試行")
+                Text(text = stringResource(R.string.common_retry))
             }
         }
     }

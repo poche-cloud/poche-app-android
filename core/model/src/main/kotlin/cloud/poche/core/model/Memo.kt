@@ -1,7 +1,6 @@
 package cloud.poche.core.model
 
 import kotlinx.serialization.Serializable
-import java.time.Instant
 
 @Serializable
 data class Memo(
@@ -12,6 +11,7 @@ data class Memo(
     val updatedAt: Long,
     val filePath: String? = null,
     val durationMs: Long? = null,
+    val pendingSync: Boolean = false,
 )
 
 enum class MemoType {

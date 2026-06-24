@@ -33,5 +33,5 @@ interface MemoDao {
     suspend fun deleteAll()
 
     @Query("SELECT * FROM memos WHERE pendingSync = 1")
-    fun getPendingSyncMemos(): Flow<List<MemoEntity>>
+    suspend fun getPendingSyncMemos(): List<MemoEntity>
 }

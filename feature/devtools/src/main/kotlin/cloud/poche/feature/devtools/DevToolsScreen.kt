@@ -21,9 +21,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.ui.R
 import cloud.poche.feature.devtools.component.CacheActionsSection
 import cloud.poche.feature.devtools.component.EnvironmentInfoSection
 import cloud.poche.feature.devtools.component.FeatureFlagsSection
@@ -36,15 +39,16 @@ internal fun DevToolsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
                 is DevToolsEvent.CacheClearSuccess ->
-                    snackbarHostState.showSnackbar("キャッシュをクリアしました")
+                    snackbarHostState.showSnackbar(context.getString(R.string.devtools_cache_clear_success))
 
                 is DevToolsEvent.CacheClearError ->
-                    snackbarHostState.showSnackbar("キャッシュのクリアに失敗しました")
+                    snackbarHostState.showSnackbar(context.getString(R.string.devtools_cache_clear_failed))
             }
         }
     }
@@ -71,12 +75,12 @@ private fun DevToolsScreenContent(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("開発者ツール") },
+                title = { Text(stringResource(R.string.devtools_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },

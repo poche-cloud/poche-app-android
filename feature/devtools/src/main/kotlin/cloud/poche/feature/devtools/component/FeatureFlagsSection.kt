@@ -16,15 +16,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun FeatureFlagsSection(flags: Map<String, Boolean>, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
-        SectionHeader(title = "機能フラグ")
+        SectionHeader(title = stringResource(R.string.feature_flags_title))
         if (flags.isEmpty()) {
             Text(
-                text = "機能フラグが設定されていません",
+                text = stringResource(R.string.feature_flags_empty),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -62,7 +64,11 @@ private fun FeatureFlagItem(name: String, enabled: Boolean, modifier: Modifier =
             modifier = Modifier.weight(1f),
         )
         Text(
-            text = if (enabled) "有効" else "無効",
+            text = if (enabled) {
+                stringResource(R.string.feature_flags_enabled)
+            } else {
+                stringResource(R.string.feature_flags_disabled)
+            },
             style = MaterialTheme.typography.bodySmall,
             color = if (enabled) {
                 MaterialTheme.colorScheme.primary

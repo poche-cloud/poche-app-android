@@ -11,4 +11,5 @@ interface MemoRepository {
     suspend fun deleteMemo(id: String)
     suspend fun getMemoCount(): Int
     suspend fun deleteAll()
+    suspend fun getPendingSyncMemos(): List<Memo>
 }

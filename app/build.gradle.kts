@@ -10,6 +10,49 @@ plugins {
 android {
     namespace = "cloud.poche.app"
 
+    val releaseKeystorePath = System.getenv("KEYSTORE_PATH")
+    val releaseKeystorePassword = System.getenv("KEYSTORE_PASSWORD")
+    val releaseKeyAlias = System.getenv("KEY_ALIAS")
+    val releaseKeyPassword = System.getenv("KEY_PASSWORD")
+    val hasReleaseSigningConfig =
+        listOf(
+            releaseKeystorePath,
+            releaseKeystorePassword,
+            releaseKeyAlias,
+            releaseKeyPassword,
+        ).all { !it.isNullOrBlank() }
+    val releaseSigningRequiredTasks =
+        setOf(
+            "assemble",
+            "assembleprod",
+            "assembleprodrelease",
+            "assemblerelease",
+            "assemblestg",
+            "assemblestgrelease",
+            "build",
+            "bundle",
+            "bundleprod",
+            "bundleprodrelease",
+            "bundlerelease",
+            "bundlestg",
+            "bundlestgrelease",
+        )
+    val requiresReleaseSigningConfig =
+        gradle.startParameter.taskNames
+            .map { it.substringAfterLast(":").lowercase() }
+            .any { taskName ->
+                taskName.contains("prodrelease") ||
+                    taskName.contains("stgrelease") ||
+                    taskName in releaseSigningRequiredTasks
+            }
+
+    if (requiresReleaseSigningConfig && !hasReleaseSigningConfig) {
+        error(
+            "KEYSTORE_PATH, KEYSTORE_PASSWORD, KEY_ALIAS, and KEY_PASSWORD are required " +
+                "for staging and production release builds.",
+        )
+    }
+
     defaultConfig {
         applicationId = "cloud.poche.app"
         targetSdk = 36
@@ -17,6 +60,17 @@ android {
         versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        if (hasReleaseSigningConfig) {
+            create("release") {
+                storeFile = file(checkNotNull(releaseKeystorePath))
+                storePassword = releaseKeystorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
     }
 
     buildTypes {
@@ -30,6 +84,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            if (hasReleaseSigningConfig) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
@@ -40,6 +97,9 @@ android {
             dimension = "environment"
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
+            if (!hasReleaseSigningConfig) {
+                signingConfig = signingConfigs.getByName("debug")
+            }
         }
         create("stg") {
             dimension = "environment"

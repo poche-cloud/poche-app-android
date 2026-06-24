@@ -56,11 +56,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cloud.poche.core.model.MemoType
+import cloud.poche.core.ui.R
 import coil3.compose.AsyncImage
 import java.io.File
 
@@ -70,43 +72,51 @@ internal fun CaptureScreen(
     memoType: MemoType,
     onCaptureComplete: () -> Unit,
     modifier: Modifier = Modifier,
+    sharedUrl: String? = null,
     viewModel: CaptureViewModel = hiltViewModel(),
 ) {
     val isSaving by viewModel.isSaving.collectAsStateWithLifecycle()
     val photoUiState by viewModel.photoUiState.collectAsStateWithLifecycle()
     val voiceUiState by viewModel.voiceUiState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
                 is CaptureEvent.SaveSuccess -> {
-                    snackbarHostState.showSnackbar("保存しました")
+                    snackbarHostState.showSnackbar(context.getString(R.string.memo_saved))
                     onCaptureComplete()
                 }
 
                 is CaptureEvent.ShowError ->
-                    snackbarHostState.showSnackbar(event.message)
+                    snackbarHostState.showSnackbar(event.message.asString(context))
             }
         }
     }
 
-    val title = when (memoType) {
-        MemoType.TEXT -> "メモ"
-        MemoType.PHOTO -> "写真"
-        MemoType.VOICE -> "音声メモ"
+    LaunchedEffect(sharedUrl) {
+        if (sharedUrl != null) {
+            viewModel.saveBookmarkFromUrl(sharedUrl)
+        }
+    }
+
+    val titleRes = when (memoType) {
+        MemoType.TEXT -> R.string.capture_title_text
+        MemoType.PHOTO -> R.string.capture_title_photo
+        MemoType.VOICE -> R.string.capture_title_voice
     }
 
     Scaffold(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text(title) },
+                title = { Text(stringResource(titleRes)) },
                 navigationIcon = {
                     IconButton(onClick = onCaptureComplete) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },
@@ -160,7 +170,7 @@ private fun MemoCaptureContent(isSaving: Boolean, onSave: (String) -> Unit, modi
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            placeholder = { Text("メモを入力...") },
+            placeholder = { Text(stringResource(R.string.capture_input_placeholder)) },
             enabled = !isSaving,
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -175,7 +185,7 @@ private fun MemoCaptureContent(isSaving: Boolean, onSave: (String) -> Unit, modi
                     strokeWidth = 2.dp,
                 )
             } else {
-                Text("保存")
+                Text(stringResource(R.string.common_save))
             }
         }
     }
@@ -274,7 +284,7 @@ private fun PhotoPickerView(onPhotoCaptured: (Uri) -> Unit, modifier: Modifier =
         ) {
             Icon(Icons.Default.CameraAlt, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("カメラで撮影")
+            Text(stringResource(R.string.capture_photo_take))
         }
         Spacer(modifier = Modifier.height(12.dp))
         OutlinedButton(
@@ -283,7 +293,7 @@ private fun PhotoPickerView(onPhotoCaptured: (Uri) -> Unit, modifier: Modifier =
         ) {
             Icon(Icons.Default.PhotoLibrary, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))
-            Text("ギャラリーから選択")
+            Text(stringResource(R.string.capture_photo_pick))
         }
     }
 }
@@ -303,7 +313,7 @@ private fun PhotoPreviewView(
     ) {
         AsyncImage(
             model = imageUri,
-            contentDescription = "撮影した写真",
+            contentDescription = stringResource(R.string.capture_title_photo),
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f)
@@ -316,7 +326,7 @@ private fun PhotoPreviewView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            placeholder = { Text("キャプションを追加...") },
+            placeholder = { Text(stringResource(R.string.capture_caption_placeholder)) },
         )
         Row(
             modifier = Modifier
@@ -330,14 +340,14 @@ private fun PhotoPreviewView(
                 },
                 modifier = Modifier.weight(1f),
             ) {
-                Text("撮り直す")
+                Text(stringResource(R.string.capture_photo_retake))
             }
             Spacer(modifier = Modifier.width(12.dp))
             Button(
                 onClick = { onSave(imageUri, caption) },
                 modifier = Modifier.weight(1f),
             ) {
-                Text("保存")
+                Text(stringResource(R.string.common_save))
             }
         }
     }
@@ -434,7 +444,7 @@ private fun VoiceReadyView(onStartRecording: () -> Unit, modifier: Modifier = Mo
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
-            text = "タップして録音を開始",
+            text = stringResource(R.string.capture_voice_ready),
             style = MaterialTheme.typography.bodyLarge,
         )
         Spacer(modifier = Modifier.height(32.dp))
@@ -446,7 +456,7 @@ private fun VoiceReadyView(onStartRecording: () -> Unit, modifier: Modifier = Mo
         ) {
             Icon(
                 imageVector = Icons.Default.Mic,
-                contentDescription = "録音開始",
+                contentDescription = stringResource(R.string.capture_voice_start),
                 tint = MaterialTheme.colorScheme.onError,
                 modifier = Modifier
                     .padding(20.dp)
@@ -476,7 +486,7 @@ private fun VoiceRecordingView(elapsedMs: Long, onStop: () -> Unit, modifier: Mo
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "録音中...",
+            text = stringResource(R.string.capture_voice_recording),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.error,
         )
@@ -493,7 +503,7 @@ private fun VoiceRecordingView(elapsedMs: Long, onStop: () -> Unit, modifier: Mo
         ) {
             Icon(
                 imageVector = Icons.Default.Stop,
-                contentDescription = "録音停止",
+                contentDescription = stringResource(R.string.capture_voice_stop),
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier
                     .padding(20.dp)
@@ -539,7 +549,7 @@ private fun VoiceRecordedView(
         ) {
             Icon(
                 imageVector = Icons.Default.PlayArrow,
-                contentDescription = "再生",
+                contentDescription = stringResource(R.string.capture_voice_play),
                 modifier = Modifier.size(36.dp),
             )
         }
@@ -548,7 +558,7 @@ private fun VoiceRecordedView(
             value = caption,
             onValueChange = { caption = it },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("キャプションを追加...") },
+            placeholder = { Text(stringResource(R.string.capture_caption_placeholder)) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -559,14 +569,14 @@ private fun VoiceRecordedView(
                 },
                 modifier = Modifier.weight(1f),
             ) {
-                Text("録り直す")
+                Text(stringResource(R.string.capture_voice_retake))
             }
             Spacer(modifier = Modifier.width(12.dp))
             Button(
                 onClick = { onSave(filePath, durationMs, caption) },
                 modifier = Modifier.weight(1f),
             ) {
-                Text("保存")
+                Text(stringResource(R.string.common_save))
             }
         }
     }
@@ -615,7 +625,7 @@ private fun VoicePlayingView(
         ) {
             Icon(
                 imageVector = Icons.Default.Pause,
-                contentDescription = "一時停止",
+                contentDescription = stringResource(R.string.capture_voice_pause),
                 modifier = Modifier.size(36.dp),
             )
         }
@@ -624,7 +634,7 @@ private fun VoicePlayingView(
             value = caption,
             onValueChange = { caption = it },
             modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("キャプションを追加...") },
+            placeholder = { Text(stringResource(R.string.capture_caption_placeholder)) },
         )
         Spacer(modifier = Modifier.height(16.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
@@ -635,14 +645,14 @@ private fun VoicePlayingView(
                 },
                 modifier = Modifier.weight(1f),
             ) {
-                Text("録り直す")
+                Text(stringResource(R.string.capture_voice_retake))
             }
             Spacer(modifier = Modifier.width(12.dp))
             Button(
                 onClick = { onSave(filePath, durationMs, caption) },
                 modifier = Modifier.weight(1f),
             ) {
-                Text("保存")
+                Text(stringResource(R.string.common_save))
             }
         }
     }

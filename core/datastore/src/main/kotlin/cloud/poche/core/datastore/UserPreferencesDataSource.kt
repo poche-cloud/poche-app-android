@@ -19,7 +19,14 @@ class UserPreferencesDataSource @Inject constructor(private val dataStore: DataS
             darkThemeConfig = prefs[DARK_THEME_CONFIG]
                 ?.toDarkThemeConfig()
                 ?: DarkThemeConfig.FOLLOW_SYSTEM,
+            aiConsent = prefs[AI_CONSENT] ?: false,
         )
+    }
+
+    suspend fun setAiConsent(consented: Boolean) {
+        dataStore.edit { prefs ->
+            prefs[AI_CONSENT] = consented
+        }
     }
 
     suspend fun setOnboardingCompleted(completed: Boolean) {
@@ -70,6 +77,7 @@ class UserPreferencesDataSource @Inject constructor(private val dataStore: DataS
         val LOCALE = stringPreferencesKey("locale")
         val FCM_TOKEN = stringPreferencesKey("fcm_token")
         val DEFAULT_CAPTURE_TYPE = stringPreferencesKey("default_capture_type")
+        val AI_CONSENT = booleanPreferencesKey("ai_consent")
     }
 }
 

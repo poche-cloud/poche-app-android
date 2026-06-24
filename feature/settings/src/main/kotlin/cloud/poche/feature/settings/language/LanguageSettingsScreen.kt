@@ -24,10 +24,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cloud.poche.core.ui.R
 
 @Composable
 internal fun LanguageSettingsScreen(
@@ -57,12 +59,12 @@ private fun LanguageSettingsScreenContent(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = { Text("言語選択") },
+                title = { Text(stringResource(R.string.language_settings_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "戻る",
+                            contentDescription = stringResource(R.string.common_back),
                         )
                     }
                 },
@@ -80,15 +82,15 @@ private fun LanguageSettingsScreenContent(
                         .selectableGroup(),
                 ) {
                     LanguageRadioTile(
-                        title = "日本語",
-                        subtitle = "Japanese",
+                        title = stringResource(R.string.language_settings_ja_native),
+                        subtitle = stringResource(R.string.language_settings_ja_en),
                         selected = uiState.currentLocale == "ja",
                         onClick = { onLocaleSelected("ja") },
                     )
                     HorizontalDivider(modifier = Modifier.padding(start = 56.dp))
                     LanguageRadioTile(
-                        title = "English",
-                        subtitle = "英語",
+                        title = stringResource(R.string.language_settings_en_native),
+                        subtitle = stringResource(R.string.language_settings_en_en),
                         selected = uiState.currentLocale == "en",
                         onClick = { onLocaleSelected("en") },
                     )
